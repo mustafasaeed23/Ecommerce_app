@@ -1,0 +1,27 @@
+import 'package:ecommerce/core/routes/routes.dart';
+import 'package:ecommerce/featuers/authentication/presentation/screens/login_screen.dart';
+import 'package:ecommerce/featuers/authentication/presentation/screens/register_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:page_transition/page_transition.dart';
+
+class AppRouter {
+  Route genegratedRoute(RouteSettings settings) {
+    switch (settings.name) {
+      case Routes.registerScreen:
+        return PageTransition(
+          type: PageTransitionType.fade,
+          child: RegisterScreen(),
+        );
+
+      case Routes.loginScreen:
+        return PageTransition(
+          type: PageTransitionType.fade,
+          child: LoginScreen(),
+        );
+
+      default:
+        return MaterialPageRoute(builder: (_) => RegisterScreen());
+    }
+  }
+}
