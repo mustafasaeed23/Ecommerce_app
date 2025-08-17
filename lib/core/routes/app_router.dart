@@ -1,6 +1,7 @@
 import 'package:ecommerce/core/routes/routes.dart';
 import 'package:ecommerce/featuers/authentication/presentation/screens/login_screen.dart';
 import 'package:ecommerce/featuers/authentication/presentation/screens/register_screen.dart';
+import 'package:ecommerce/featuers/home/presentation/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
@@ -18,6 +19,11 @@ class AppRouter {
         return PageTransition(
           type: PageTransitionType.fade,
           child: LoginScreen(),
+        );
+      case Routes.homeScreen:
+        return PageTransition(
+          type: PageTransitionType.fade,
+          child: HomeScreen(),
         );
 
       default:
