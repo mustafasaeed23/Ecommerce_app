@@ -1,3 +1,4 @@
+import 'package:ecommerce/Ecommerce_app.dart';
 import 'package:ecommerce/core/bloc_observer.dart';
 import 'package:ecommerce/core/constants/constants.dart';
 import 'package:ecommerce/core/di/service_locator.dart';
@@ -13,32 +14,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 void main() {
   configureDependencies();
   Bloc.observer = MyBlocObserver();
-  runApp(MyApp(appRouter: AppRouter()));
+  runApp(EcommerceApp(appRouter: AppRouter()));
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({super.key, required this.appRouter});
-  final AppRouter appRouter;
-
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  @override
-  Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: const Size(375, 812),
-      builder: (context, child) => child!,
-      splitScreenMode: true,
-      minTextAdapt: true,
-      child: MaterialApp(
-        title: 'Ecommerce',
-        debugShowCheckedModeBanner: false,
-        onGenerateRoute: widget.appRouter.genegratedRoute,
-        initialRoute: Routes.loginScreen,
-        navigatorKey: Constants.navigatorKey,
-      ),
-    );
-  }
-}
