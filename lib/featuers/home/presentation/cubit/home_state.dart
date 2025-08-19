@@ -1,10 +1,34 @@
-part of 'home_cubit.dart';
+import 'package:ecommerce/featuers/home/domain/entities/brand_entity.dart';
+import 'package:ecommerce/featuers/home/domain/entities/category_entity.dart';
 
-sealed class HomeState extends Equatable {
-  const HomeState();
+abstract class HomeState {}
 
-  @override
-  List<Object> get props => [];
+class HomeInitial extends HomeState {}
+
+class CategoriesLoading extends HomeState {}
+
+class CategoriesLoaded extends HomeState {
+  final List<CategoryEntity> categories;
+
+  CategoriesLoaded(this.categories);
 }
 
-final class HomeInitial extends HomeState {}
+class CategoriesError extends HomeState {
+  final String message;
+
+  CategoriesError(this.message);
+}
+
+class BrandsLoading extends HomeState {}
+
+class BrandsLoaded extends HomeState {
+  final List<BrandEntity> brands;
+
+  BrandsLoaded(this.brands);
+}
+
+class BrandsError extends HomeState {
+  final String message;
+
+  BrandsError(this.message);
+}

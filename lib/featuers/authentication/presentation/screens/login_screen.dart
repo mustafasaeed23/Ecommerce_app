@@ -1,4 +1,4 @@
-import 'package:ecommerce/core/constants/fonts_style.dart';
+import 'package:ecommerce/core/theme/fonts_style.dart';
 import 'package:ecommerce/core/di/service_locator.dart';
 import 'package:ecommerce/core/helpers/vaildations.dart';
 import 'package:ecommerce/core/routes/routes.dart';
@@ -11,7 +11,7 @@ import 'package:ecommerce/featuers/authentication/presentation/cubit/auth_state.
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../core/constants/assets.dart';
+import '../../../../core/theme/assets.dart';
 import '../../../../core/utils/dialogs.dart';
 
 class LoginScreen extends StatefulWidget {

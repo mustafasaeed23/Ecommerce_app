@@ -6,21 +6,23 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 @Singleton(as: AuthLocalDataSource)
 class AuthSharedPrefLocalDataSource implements AuthLocalDataSource {
+  final SharedPreferences sharedPrefs;
+
+  AuthSharedPrefLocalDataSource(this.sharedPrefs);
+
   @override
   Future<void> saveToken(String token) async {
     try {
-      final sharedPref = await SharedPreferences.getInstance();
-      await sharedPref.setString(CacheConstants.tokenKey, token);
+      await sharedPrefs.setString(CacheConstants.tokenKey, token);
     } catch (exception) {
       throw LocalException("Failed To Save Token!");
     }
   }
 
   @override
-  Future<String> getToken() async {
+  String getToken() {
     try {
-      final sharedPref = await SharedPreferences.getInstance();
-      return sharedPref.getString(CacheConstants.tokenKey)!;
+      return sharedPrefs.getString(CacheConstants.tokenKey)!;
     } catch (_) {
       throw LocalException("Failed To Get Token!");
     }
