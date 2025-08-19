@@ -1,4 +1,5 @@
 import 'package:ecommerce/core/di/service_locator.dart';
+import 'package:ecommerce/core/routes/routes.dart';
 import 'package:ecommerce/core/theme/assets.dart';
 import 'package:ecommerce/core/theme/fonts_style.dart';
 import 'package:ecommerce/core/theme/app_colors.dart';
@@ -52,11 +53,15 @@ class HomeTab extends StatelessWidget {
                     ),
                   ),
                   Spacer(),
-                  Text(
-                    "See all",
-                    style: FontsStyle.regular.copyWith(
-                      fontSize: 14.r,
-                      color: AppColors.mainColor,
+                  InkWell(
+                    onTap: () =>
+                        Navigator.pushNamed(context, Routes.categoriesScreen),
+                    child: Text(
+                      "See all",
+                      style: FontsStyle.regular.copyWith(
+                        fontSize: 14.r,
+                        color: AppColors.mainColor,
+                      ),
                     ),
                   ),
                 ],
