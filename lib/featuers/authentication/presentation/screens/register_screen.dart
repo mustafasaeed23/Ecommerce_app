@@ -1,5 +1,5 @@
-import 'package:ecommerce/core/constants/assets.dart';
-import 'package:ecommerce/core/constants/fonts_style.dart';
+import 'package:ecommerce/core/theme/assets.dart';
+import 'package:ecommerce/core/theme/fonts_style.dart';
 import 'package:ecommerce/core/di/service_locator.dart';
 import 'package:ecommerce/core/helpers/vaildations.dart';
 import 'package:ecommerce/core/routes/routes.dart';

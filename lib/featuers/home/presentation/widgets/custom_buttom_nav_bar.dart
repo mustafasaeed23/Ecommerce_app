@@ -36,69 +36,66 @@ class CustomBottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      top: false,
-      child: Container(
-        height: height,
+    return Container(
+      height: height,
 
-        decoration: BoxDecoration(
-          color: backgroundColor,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(borderRadius.r),
-            topRight: Radius.circular(borderRadius.r),
-          ),
+      decoration: BoxDecoration(
+        color: backgroundColor,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(borderRadius.r),
+          topRight: Radius.circular(borderRadius.r),
         ),
-        child: Row(
-          children: List.generate(svgIcons.length, (i) {
-            final bool selected = i == currentIndex;
+      ),
+      child: Row(
+        children: List.generate(svgIcons.length, (i) {
+          final bool selected = i == currentIndex;
 
-            return Expanded(
-              child: InkWell(
-                onTap: () => onTap(i),
-                borderRadius: BorderRadius.circular(100.r),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    AnimatedContainer(
-                      duration: const Duration(milliseconds: 180),
-                      curve: Curves.easeOut,
-                      width: selected ? 44.r : 24.r,
-                      height: selected ? 44.r : 24.r,
-                      decoration: BoxDecoration(
-                        color: selected ? Colors.white : Colors.transparent,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Center(
-                        child: SvgPicture.asset(
-                          svgIcons[i],
-                          width: selected ? 24.r : 22.r,
-                          height: selected ? 24.r : 22.r,
-                          colorFilter: ColorFilter.mode(
-                            selected ? activeColor : inactiveColor,
-                            BlendMode.srcIn,
-                          ),
+          return Expanded(
+            child: InkWell(
+              onTap: () => onTap(i),
+              borderRadius: BorderRadius.circular(100.r),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  AnimatedContainer(
+                    duration: const Duration(milliseconds: 180),
+                    curve: Curves.easeOut,
+                    width: selected ? 44.r : 24.r,
+                    height: selected ? 44.r : 24.r,
+                    decoration: BoxDecoration(
+                      color: selected ? Colors.white : Colors.transparent,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Center(
+                      child: SvgPicture.asset(
+                        svgIcons[i],
+                        width: selected ? 24.r : 22.r,
+                        height: selected ? 24.r : 22.r,
+                        colorFilter: ColorFilter.mode(
+                          selected ? activeColor : inactiveColor,
+                          BlendMode.srcIn,
                         ),
                       ),
                     ),
-                    if (showLabels) ...[
-                      SizedBox(height: 6.h),
-                      Text(
-                        labels[i],
-                        style: TextStyle(
-                          fontSize: 11.sp,
-                          color: Colors.white.withOpacity(selected ? 1 : 0.75),
-                          fontWeight: selected
-                              ? FontWeight.w600
-                              : FontWeight.w400,
-                        ),
+                  ),
+                  if (showLabels) ...[
+                    SizedBox(height: 6.h),
+                    Text(
+                      labels[i],
+                      style: TextStyle(
+                        fontSize: 11.sp,
+                        color: Colors.white.withOpacity(selected ? 1 : 0.75),
+                        fontWeight: selected
+                            ? FontWeight.w600
+                            : FontWeight.w400,
                       ),
-                    ],
+                    ),
                   ],
-                ),
+                ],
               ),
-            );
-          }),
-        ),
+            ),
+          );
+        }),
       ),
     );
   }

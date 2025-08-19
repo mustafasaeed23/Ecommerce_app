@@ -1,8 +1,31 @@
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
+import 'package:ecommerce/featuers/home/domain/usecases/brands_use_case.dart';
+import 'package:ecommerce/featuers/home/domain/usecases/categories_use_case.dart';
+import 'package:ecommerce/featuers/home/presentation/cubit/home_state.dart';
+import 'package:injectable/injectable.dart';
 
-part 'home_state.dart';
-
+@injectable
 class HomeCubit extends Cubit<HomeState> {
-  HomeCubit() : super(HomeInitial());
+  HomeCubit(this.brandsUseCase, this.categoriesUseCase) : super(HomeInitial());
+
+  final CategoriesUseCase categoriesUseCase;
+  final BrandsUseCase brandsUseCase;
+
+  Future<void> getCategories() async {
+    emit(CategoriesLoading());
+    final result = await categoriesUseCase.getCategories();
+    result.fold((failure) {
+      emit(CategoriesError(failure.message));
+      print("error ${failure.message}");
+    }, (categories) => emit(CategoriesLoaded(categories)));
+  }
+
+  Future<void> getBrands() async {
+    emit(BrandsLoading());
+    final result = await brandsUseCase.getBrands();
+    result.fold(
+      (failure) => emit(BrandsError(failure.message)),
+      (brands) => emit(BrandsLoaded(brands)),
+    );
+  }
 }

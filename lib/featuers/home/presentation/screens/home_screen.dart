@@ -1,5 +1,7 @@
-import 'package:ecommerce/core/constants/assets.dart';
+import 'package:ecommerce/core/di/service_locator.dart';
+import 'package:ecommerce/core/theme/assets.dart';
 import 'package:ecommerce/core/theme/app_colors.dart';
+import 'package:ecommerce/featuers/home/presentation/cubit/home_cubit.dart';
 import 'package:ecommerce/featuers/home/presentation/widgets/custom_buttom_nav_bar.dart';
 import 'package:ecommerce/featuers/home/presentation/widgets/home_tab.dart';
 import 'package:ecommerce/featuers/layout/cubit/nav_bar_cubit.dart';
@@ -18,16 +20,17 @@ class HomeScreen extends StatelessWidget {
       child: BlocBuilder<NavBarCubit, NavBarState>(
         builder: (context, state) {
           return Scaffold(
-            backgroundColor: AppColors.whiteColor,
+            // extendBody: true,
+            backgroundColor: Colors.white,
             body: IndexedStack(
               sizing: StackFit.expand,
               clipBehavior: Clip.none,
               index: state.selectedIndex,
-              children: const [
-                HomeTab(),
-                Center(child: Text("Search")),
-                Center(child: Text("Cart")),
-                Center(child: Text("Profile")),
+              children: [
+                const HomeTab(), 
+                const Center(child: Text("Search")),
+                const Center(child: Text("Cart")),
+                const Center(child: Text("Profile")),
               ],
             ),
             bottomNavigationBar: CustomBottomNavBar(

@@ -11,12 +11,9 @@ import '../../models/login_request.dart';
 
 @Singleton(as: AuthRemoteDataSource)
 class AuthApiRemoteDataSource extends AuthRemoteDataSource {
-  final _dio = Dio(
-    BaseOptions(
-      baseUrl: ApiConstants.baseUrl,
-      receiveDataWhenStatusError: true,
-    ),
-  );
+  final Dio _dio;
+
+  AuthApiRemoteDataSource(this._dio);
 
   @override
   Future<RegisterResponse> register(RegisterRequest registerRequest) async {
@@ -46,7 +43,7 @@ class AuthApiRemoteDataSource extends AuthRemoteDataSource {
         ApiConstants.loginEndPoint,
         data: loginRequest.toJson(),
       );
-            print("Remote response: ${response.data}");
+      print("Remote response: ${response.data}");
 
       return LoginResponse.fromJson(response.data);
     } catch (exception) {

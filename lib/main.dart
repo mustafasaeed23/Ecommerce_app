@@ -11,9 +11,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 // navigatorKey
 //  final navigatorKey = GlobalKey<NavigatorState>();
 
-void main() {
-  configureDependencies();
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await configureDependencies();
+
   Bloc.observer = MyBlocObserver();
   runApp(EcommerceApp(appRouter: AppRouter()));
 }
-

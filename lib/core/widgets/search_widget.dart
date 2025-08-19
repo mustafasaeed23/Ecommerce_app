@@ -1,5 +1,5 @@
-import 'package:ecommerce/core/constants/assets.dart';
-import 'package:ecommerce/core/constants/fonts_style.dart';
+import 'package:ecommerce/core/theme/assets.dart';
+import 'package:ecommerce/core/theme/fonts_style.dart';
 import 'package:ecommerce/core/theme/app_colors.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

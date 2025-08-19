@@ -1,5 +1,10 @@
-import 'package:ecommerce/core/constants/assets.dart';
+import 'package:ecommerce/core/di/service_locator.dart';
+import 'package:ecommerce/core/widgets/loading_widget.dart';
+import 'package:ecommerce/featuers/home/presentation/cubit/home_cubit.dart';
+import 'package:ecommerce/featuers/home/presentation/cubit/home_state.dart';
+import 'package:ecommerce/featuers/home/presentation/widgets/category_item_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CategoriesSection extends StatelessWidget {
@@ -7,21 +12,38 @@ class CategoriesSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      padding: const EdgeInsets.all(10),
-      itemCount: 8,
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 4,
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 12,
-      ),
-      itemBuilder: (context, index) => Container(
-        width: 70.w,
-        height: 70.h,
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(10.r)),
-        child: Image.asset(Assets.categoriesImage),
+    return BlocProvider(
+      create: (context) => serviceLocator.get<HomeCubit>()..getCategories(),
+      child: SizedBox(
+        height: 300.h,
+        child: BlocBuilder<HomeCubit, HomeState>(
+          builder: (context, state) {
+            if (state is CategoriesLoading) {
+              return LoadingWidget();
+            } else if (state is CategoriesLoaded) {
+              var categories = state.categories;
+              return GridView.builder(
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
+                physics: ScrollPhysics(),
+                padding: const EdgeInsets.all(10),
+                itemCount: categories.length,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisExtent: 100.h,
+                  crossAxisSpacing: 16,
+                  mainAxisSpacing: 13,
+                  childAspectRatio: 100 / 70,
+                ),
+                itemBuilder: (context, index) =>
+                    CategoryItemWidget(categoryEntity: categories[index]),
+              );
+            } else if (state is CategoriesError) {
+              return Center(child: Text(state.message));
+            }
+            return Container();
+          },
+        ),
       ),
     );
   }

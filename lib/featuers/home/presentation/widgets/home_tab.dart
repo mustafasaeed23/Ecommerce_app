@@ -1,7 +1,9 @@
-import 'package:ecommerce/core/constants/assets.dart';
-import 'package:ecommerce/core/constants/fonts_style.dart';
+import 'package:ecommerce/core/di/service_locator.dart';
+import 'package:ecommerce/core/theme/assets.dart';
+import 'package:ecommerce/core/theme/fonts_style.dart';
 import 'package:ecommerce/core/theme/app_colors.dart';
 import 'package:ecommerce/core/widgets/search_widget.dart';
+import 'package:ecommerce/featuers/home/presentation/cubit/home_cubit.dart';
 import 'package:ecommerce/featuers/home/presentation/widgets/banners_widget.dart';
 import 'package:ecommerce/featuers/home/presentation/widgets/brands_section.dart';
 import 'package:ecommerce/featuers/home/presentation/widgets/categories_section.dart';
@@ -14,15 +16,14 @@ class HomeTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Padding(
-        padding: EdgeInsets.symmetric(vertical: 35.h, horizontal: 15.w),
-        child: SingleChildScrollView(
+    return SafeArea(
+      top: true,
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 20.h),
               Row(
                 children: [
                   Expanded(flex: 9, child: SearchWidget()),
@@ -41,12 +42,24 @@ class HomeTab extends StatelessWidget {
                 autoPlayInterval: Duration(seconds: 4),
               ),
               SizedBox(height: 20.h),
-              Text(
-                "Categories",
-                style: FontsStyle.semiBold.copyWith(
-                  fontSize: 18.r,
-                  color: AppColors.mainColor,
-                ),
+              Row(
+                children: [
+                  Text(
+                    "Categories",
+                    style: FontsStyle.semiBold.copyWith(
+                      fontSize: 18.r,
+                      color: AppColors.mainColor,
+                    ),
+                  ),
+                  Spacer(),
+                  Text(
+                    "See all",
+                    style: FontsStyle.regular.copyWith(
+                      fontSize: 14.r,
+                      color: AppColors.mainColor,
+                    ),
+                  ),
+                ],
               ),
               SizedBox(height: 10.h),
               CategoriesSection(),
