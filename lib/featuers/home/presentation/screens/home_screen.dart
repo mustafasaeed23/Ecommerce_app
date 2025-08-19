@@ -6,6 +6,7 @@ import 'package:ecommerce/featuers/home/presentation/widgets/custom_buttom_nav_b
 import 'package:ecommerce/featuers/home/presentation/widgets/home_tab.dart';
 import 'package:ecommerce/featuers/layout/cubit/nav_bar_cubit.dart';
 import 'package:ecommerce/featuers/layout/cubit/nav_bar_state.dart';
+import 'package:ecommerce/featuers/products/presentation/screens/products_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -27,8 +28,8 @@ class HomeScreen extends StatelessWidget {
               clipBehavior: Clip.none,
               index: state.selectedIndex,
               children: [
-                const HomeTab(), 
-                const Center(child: Text("Search")),
+                const HomeTab(),
+                const ProductsScreen(),
                 const Center(child: Text("Cart")),
                 const Center(child: Text("Profile")),
               ],

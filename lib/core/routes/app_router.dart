@@ -3,6 +3,7 @@ import 'package:ecommerce/featuers/authentication/presentation/screens/login_scr
 import 'package:ecommerce/featuers/authentication/presentation/screens/register_screen.dart';
 import 'package:ecommerce/featuers/categories/presentation/screens/sub_categories_screen.dart';
 import 'package:ecommerce/featuers/home/presentation/screens/home_screen.dart';
+import 'package:ecommerce/featuers/products/presentation/screens/product_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -30,9 +31,14 @@ class AppRouter {
           type: PageTransitionType.fade,
           child: CategoriesPage(),
         );
+      case Routes.productDetailsScreen:
+        return PageTransition(
+          type: PageTransitionType.fade,
+          child: ProductDetailsScreen(),
+        );
 
       default:
-        return MaterialPageRoute(builder: (_) => RegisterScreen());
+        return MaterialPageRoute(builder: (_) => HomeScreen());
     }
   }
 }
