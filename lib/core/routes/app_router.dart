@@ -35,6 +35,7 @@ class AppRouter {
         return PageTransition(
           type: PageTransitionType.fade,
           child: ProductDetailsScreen(),
+          settings: settings
         );
 
       default:

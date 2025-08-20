@@ -1,4 +1,4 @@
-import 'package:ecommerce/core/utils/coverts.dart';
+import 'package:ecommerce/core/utils/converts.dart';
 import 'package:ecommerce/featuers/home/data/models/category_model.dart';
 
 class CategoriesResponse {

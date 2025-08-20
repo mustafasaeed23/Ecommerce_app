@@ -10,6 +10,7 @@ class ProductEntity {
   final double ratingsAverage;
   final String id;
   final int priceAfterDiscount;
+  final int sold;
 
   ProductEntity({
     required this.images,
@@ -23,5 +24,6 @@ class ProductEntity {
     required this.ratingsAverage,
     required this.id,
     required this.priceAfterDiscount,
+    required this.sold,
   });
 }
