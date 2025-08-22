@@ -1,6 +1,7 @@
 import 'package:ecommerce/core/constants/constants.dart';
 import 'package:ecommerce/core/routes/app_router.dart';
 import 'package:ecommerce/core/routes/routes.dart';
+import 'package:ecommerce/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -27,6 +28,7 @@ class _EcommerceAppState extends State<EcommerceApp> {
         onGenerateRoute: widget.appRouter.genegratedRoute,
         initialRoute: Routes.homeScreen,
         navigatorKey: Constants.navigatorKey,
+        theme: AppTheme.lightTheme,
       ),
     );
   }

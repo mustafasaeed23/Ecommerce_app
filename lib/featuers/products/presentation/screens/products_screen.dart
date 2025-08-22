@@ -18,13 +18,7 @@ class ProductsScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Row(
-                children: [
-                  Expanded(flex: 9, child: SearchWidget()),
-                  SizedBox(width: 10.w),
-                  Expanded(child: SvgPicture.asset(Assets.cartIcon)),
-                ],
-              ),
+              SearchWidget(),
               SizedBox(height: 20.h),
               ProductsListWidget(),
             ],

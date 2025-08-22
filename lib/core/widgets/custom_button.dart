@@ -9,17 +9,21 @@ class CustomButton extends StatelessWidget {
     required this.onPressed,
     required this.buttonText,
     this.textColor,
+    this.buttonColor,
+    this.borderRadius,
   });
   final void Function() onPressed;
   final String buttonText;
   final Color? textColor;
+  final Color? buttonColor;
+  final double? borderRadius;
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.whiteColor,
+        backgroundColor: buttonColor ?? AppColors.whiteColor,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.r),
+          borderRadius: BorderRadius.circular(borderRadius ?? 10.r),
         ),
         minimumSize: Size(double.infinity, 50.h),
       ),

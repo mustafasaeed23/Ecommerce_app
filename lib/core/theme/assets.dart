@@ -9,6 +9,7 @@ class Assets {
   static const String productImage = "assets/images/productImage.png";
   static const String proudctDetailsImage =
       "assets/images/product_image_details.png";
+  static const String cartProductImage = "assets/images/cart_product_image.png";
   // icons
   static const String cartIcon = "assets/icons/icon _shopping cart_.svg";
   static const String searchIcon = "assets/icons/search_icon.svg";
@@ -24,4 +25,5 @@ class Assets {
       "assets/icons/unselected_heart_icon.svg";
   static const String selectedHeartIcon =
       "assets/icons/selected_heart_icon.svg";
+  static const String deleteIcon = "assets/icons/detete_icon.svg";
 }
