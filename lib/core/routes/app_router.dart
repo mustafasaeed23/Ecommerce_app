@@ -1,6 +1,7 @@
 import 'package:ecommerce/core/routes/routes.dart';
 import 'package:ecommerce/featuers/authentication/presentation/screens/login_screen.dart';
 import 'package:ecommerce/featuers/authentication/presentation/screens/register_screen.dart';
+import 'package:ecommerce/featuers/cart/presentation/screens/cart_screen.dart';
 import 'package:ecommerce/featuers/categories/presentation/screens/sub_categories_screen.dart';
 import 'package:ecommerce/featuers/home/presentation/screens/home_screen.dart';
 import 'package:ecommerce/featuers/products/presentation/screens/product_details_screen.dart';
@@ -35,6 +36,13 @@ class AppRouter {
         return PageTransition(
           type: PageTransitionType.fade,
           child: ProductDetailsScreen(),
+          settings: settings,
+        );
+      case Routes.cartScreen:
+        return PageTransition(
+          type: PageTransitionType.fade,
+          child: CartScreen(),
+          settings: settings,
         );
 
       default:

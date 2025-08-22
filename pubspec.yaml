@@ -108,6 +108,7 @@ dependencies:
   timeago: ^3.7.1
   flutter_screenutil: ^5.9.3
   injectable: ^2.5.1
+  readmore: ^3.0.0
 
 dev_dependencies:
   flutter_test:

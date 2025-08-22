@@ -41,7 +41,6 @@ class Metadata {
 }
 
 class ProductModel extends ProductEntity {
-  int? sold;
   List<Subcategory>? subcategory;
   String? slug;
   CategoryModel? category;
@@ -50,7 +49,7 @@ class ProductModel extends ProductEntity {
   String? updatedAt;
 
   ProductModel({
-    this.sold,
+    required super.sold,
     required super.images,
     this.subcategory,
     required super.ratingsQuantity,

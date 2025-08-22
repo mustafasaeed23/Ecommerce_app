@@ -1,11 +1,11 @@
 import 'package:ecommerce/core/di/service_locator.dart';
+import 'package:ecommerce/core/routes/routes.dart';
 import 'package:ecommerce/core/widgets/loading_widget.dart';
 import 'package:ecommerce/featuers/products/presentation/cubit/products_cubit.dart';
 import 'package:ecommerce/featuers/products/presentation/cubit/products_state.dart';
 import 'package:ecommerce/featuers/products/presentation/widgets/product_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ProductsListWidget extends StatelessWidget {
   const ProductsListWidget({super.key});
@@ -31,7 +31,16 @@ class ProductsListWidget extends StatelessWidget {
               shrinkWrap: true,
               physics: const BouncingScrollPhysics(),
               itemBuilder: (context, index) {
-                return ProductItemWidget(productEntity: products[index]);
+                return InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(
+                      context,
+                      Routes.productDetailsScreen,
+                      arguments: state.products[index],
+                    );
+                  },
+                  child: ProductItemWidget(productEntity: products[index]),
+                );
               },
               itemCount: products.length,
             );

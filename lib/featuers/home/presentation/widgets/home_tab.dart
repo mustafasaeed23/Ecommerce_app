@@ -25,13 +25,7 @@ class HomeTab extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  Expanded(flex: 9, child: SearchWidget()),
-                  SizedBox(width: 10.w),
-                  Expanded(child: SvgPicture.asset(Assets.cartIcon)),
-                ],
-              ),
+              SearchWidget(),
               SizedBox(height: 20.h),
               BannersCarousel(
                 assets: const [Assets.banner1, Assets.banner2, Assets.banner3],
