@@ -1,6 +1,7 @@
 import 'package:ecommerce/core/di/service_locator.dart';
 import 'package:ecommerce/core/routes/routes.dart';
 import 'package:ecommerce/core/widgets/loading_widget.dart';
+import 'package:ecommerce/featuers/cart/presentation/cubit/cart_cubit.dart';
 import 'package:ecommerce/featuers/products/presentation/cubit/products_cubit.dart';
 import 'package:ecommerce/featuers/products/presentation/cubit/products_state.dart';
 import 'package:ecommerce/featuers/products/presentation/widgets/product_item_widget.dart';
@@ -12,8 +13,14 @@ class ProductsListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => serviceLocator.get<ProductsCubit>()..getProducts(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) =>
+              serviceLocator.get<ProductsCubit>()..getProducts(),
+        ),
+        BlocProvider(create: (context) => serviceLocator.get<CartCubit>()),
+      ],
       child: BlocBuilder<ProductsCubit, ProductsState>(
         builder: (context, state) {
           if (state is ProductsLoading) {

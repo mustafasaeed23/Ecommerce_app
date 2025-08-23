@@ -1,13 +1,25 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce/core/theme/app_colors.dart';
 import 'package:ecommerce/core/theme/assets.dart';
 import 'package:ecommerce/core/theme/fonts_style.dart';
 import 'package:ecommerce/core/widgets/quantity_widget.dart';
+import 'package:ecommerce/featuers/cart/domain/entities/cart_item_entity.dart';
+import 'package:ecommerce/featuers/cart/presentation/cubit/cart_cubit.dart';
+import 'package:ecommerce/featuers/cart/presentation/widgets/delete_item_from_cart_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class CartItemWidget extends StatelessWidget {
-  const CartItemWidget({super.key});
+  const CartItemWidget({
+    super.key,
+    required this.cartItemEntity,
+    required this.cartCubit,
+  });
+
+  final CartItemEntity cartItemEntity;
+  final CartCubit cartCubit;
 
   @override
   Widget build(BuildContext context) {
@@ -31,11 +43,11 @@ class CartItemWidget extends StatelessWidget {
                     topLeft: Radius.circular(15.r),
                     bottomLeft: Radius.circular(15.r),
                   ),
-                  child: Image.asset(
-                    Assets.cartProductImage,
-                    width: 120.w,
+                  child: CachedNetworkImage(
+                    imageUrl: cartItemEntity.product.imageCover,
+                    fit: BoxFit.cover,
                     height: 113.h,
-                    fit: BoxFit.cover, // prevent stretching
+                    width: 120.w,
                   ),
                 ),
                 SizedBox(width: 12.w),
@@ -46,7 +58,7 @@ class CartItemWidget extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Nike Air Jordon",
+                          cartItemEntity.product.title,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: FontsStyle.medium.copyWith(
@@ -56,7 +68,7 @@ class CartItemWidget extends StatelessWidget {
                         ),
                         SizedBox(height: 6.h),
                         Text(
-                          "EGP 3,500",
+                          "EGP ${cartItemEntity.price}",
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: FontsStyle.medium.copyWith(
@@ -68,27 +80,34 @@ class CartItemWidget extends StatelessWidget {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.all(8.w),
-                  child: InkWell(
-                    onTap: () {},
-                    borderRadius: BorderRadius.circular(10.r),
-                    child: SvgPicture.asset(
-                      Assets.deleteIcon,
-                      width: 20.w,
-                      height: 20.w,
-                    ),
-                  ),
+                DeleteItemFromCartWidget(
+                  cartCubit: cartCubit,
+                  cartItemEntity: cartItemEntity,
                 ),
               ],
             ),
           ),
-
-          // Quantity (bottom-right overlay)
           Positioned(
             right: 8.w,
             bottom: 8.h,
-            child: SizedBox(height: 35.h, child: QuantityWidget()),
+            child: SizedBox(
+              height: 35.h,
+              child: QuantityWidget(
+                cartItemCount: cartItemEntity.count.toString(),
+                decrementCart: () {
+                  if (cartItemEntity.count > 1) {
+                    cartCubit.updateCart(
+                      cartItemEntity.product.sId,
+                      cartItemEntity.count - 1,
+                    );
+                  }
+                },
+                incrementCart: () => cartCubit.updateCart(
+                  cartItemEntity.product.sId,
+                  cartItemEntity.count + 1,
+                ),
+              ),
+            ),
           ),
         ],
       ),

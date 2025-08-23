@@ -1,11 +1,14 @@
+import 'package:ecommerce/core/di/service_locator.dart';
 import 'package:ecommerce/core/routes/routes.dart';
 import 'package:ecommerce/featuers/authentication/presentation/screens/login_screen.dart';
 import 'package:ecommerce/featuers/authentication/presentation/screens/register_screen.dart';
+import 'package:ecommerce/featuers/cart/presentation/cubit/cart_cubit.dart';
 import 'package:ecommerce/featuers/cart/presentation/screens/cart_screen.dart';
 import 'package:ecommerce/featuers/categories/presentation/screens/sub_categories_screen.dart';
 import 'package:ecommerce/featuers/home/presentation/screens/home_screen.dart';
 import 'package:ecommerce/featuers/products/presentation/screens/product_details_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
 
 class AppRouter {
@@ -35,7 +38,10 @@ class AppRouter {
       case Routes.productDetailsScreen:
         return PageTransition(
           type: PageTransitionType.fade,
-          child: ProductDetailsScreen(),
+          child: BlocProvider(
+            create: (context) => serviceLocator.get<CartCubit>(),
+            child: ProductDetailsScreen(),
+          ),
           settings: settings,
         );
       case Routes.cartScreen:
