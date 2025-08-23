@@ -1,13 +1,19 @@
+import 'package:ecommerce/core/di/service_locator.dart';
+import 'package:ecommerce/core/routes/routes.dart';
 import 'package:ecommerce/core/theme/app_colors.dart';
 import 'package:ecommerce/core/theme/assets.dart';
 import 'package:ecommerce/core/theme/fonts_style.dart';
+import 'package:ecommerce/core/utils/dialogs.dart';
 import 'package:ecommerce/core/widgets/add_to_cart_widget.dart';
 import 'package:ecommerce/core/widgets/quantity_widget.dart';
+import 'package:ecommerce/featuers/cart/presentation/cubit/cart_cubit.dart';
+import 'package:ecommerce/featuers/cart/presentation/cubit/cart_state.dart';
 import 'package:ecommerce/featuers/products/domain/entities/product_entity.dart';
 import 'package:ecommerce/featuers/products/presentation/widgets/price_widget.dart';
 import 'package:ecommerce/featuers/products/presentation/widgets/product_carsouel_widget.dart';
 import 'package:ecommerce/featuers/products/presentation/widgets/size_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:readmore/readmore.dart';
@@ -44,7 +50,12 @@ class ProductDetailsScreen extends StatelessWidget {
         actions: [
           SvgPicture.asset(Assets.searchIcon),
           SizedBox(width: 10.w),
-          SvgPicture.asset(Assets.cartIcon),
+          InkWell(
+            onTap: () {
+              Navigator.pushNamed(context, Routes.cartScreen);
+            },
+            child: SvgPicture.asset(Assets.cartIcon),
+          ),
           SizedBox(width: 15.w),
         ],
       ),
@@ -115,7 +126,9 @@ class ProductDetailsScreen extends StatelessWidget {
                   ),
                 ),
                 Spacer(),
-                QuantityWidget(),
+                QuantityWidget(
+                  
+                ),
               ],
             ),
             SizedBox(height: 15.h),
@@ -172,7 +185,24 @@ class ProductDetailsScreen extends StatelessWidget {
                   ],
                 ),
                 SizedBox(width: 15.w),
-                Expanded(child: AddToCartWidget()),
+                Expanded(
+                  child: BlocListener<CartCubit, CartState>(
+                    listener: (context, state) {
+                      if (state is AddToCartSuccess) {
+                        Dialogs.successDialog(
+                          "Product Added to cart successfully",
+                        );
+                      } else if (state is AddToCartError) {
+                        Dialogs.showMessageDialog(state.message);
+                      }
+                    },
+                    child: AddToCartWidget(
+                      onTap: () {
+                        context.read<CartCubit>().addToCart(product.id);
+                      },
+                    ),
+                  ),
+                ),
               ],
             ),
             SizedBox(height: 30.h),

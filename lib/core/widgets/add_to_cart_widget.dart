@@ -6,30 +6,34 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class AddToCartWidget extends StatelessWidget {
-  const AddToCartWidget({super.key});
+  const AddToCartWidget({super.key, required this.onTap});
+  final void Function() onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 270.w,
-      height: 48.h,
-      decoration: BoxDecoration(
-        color: AppColors.mainColor,
-        borderRadius: BorderRadius.circular(20.r),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SvgPicture.asset(Assets.cartButtonIcon),
-          SizedBox(width: 12.w),
-          Text(
-            "Add To Cart",
-            style: FontsStyle.medium.copyWith(
-              fontSize: 16.r,
-              color: AppColors.whiteColor,
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        width: 270.w,
+        height: 48.h,
+        decoration: BoxDecoration(
+          color: AppColors.mainColor,
+          borderRadius: BorderRadius.circular(20.r),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SvgPicture.asset(Assets.cartButtonIcon),
+            SizedBox(width: 12.w),
+            Text(
+              "Add To Cart",
+              style: FontsStyle.medium.copyWith(
+                fontSize: 16.r,
+                color: AppColors.whiteColor,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -26,7 +26,7 @@ class _EcommerceAppState extends State<EcommerceApp> {
         title: 'Ecommerce',
         debugShowCheckedModeBanner: false,
         onGenerateRoute: widget.appRouter.genegratedRoute,
-        initialRoute: Routes.homeScreen,
+        initialRoute: Routes.loginScreen,
         navigatorKey: Constants.navigatorKey,
         theme: AppTheme.lightTheme,
       ),

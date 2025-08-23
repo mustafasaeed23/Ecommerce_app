@@ -1,12 +1,17 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ecommerce/core/di/service_locator.dart';
 import 'package:ecommerce/core/routes/routes.dart';
 import 'package:ecommerce/core/theme/app_colors.dart';
 import 'package:ecommerce/core/theme/assets.dart';
 import 'package:ecommerce/core/theme/fonts_style.dart';
+import 'package:ecommerce/core/utils/dialogs.dart';
 import 'package:ecommerce/core/widgets/favourite_icon_widget.dart';
+import 'package:ecommerce/featuers/cart/presentation/cubit/cart_cubit.dart';
+import 'package:ecommerce/featuers/cart/presentation/cubit/cart_state.dart';
 import 'package:ecommerce/featuers/products/domain/entities/product_entity.dart';
 import 'package:ecommerce/featuers/products/presentation/widgets/price_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -102,7 +107,25 @@ class ProductItemWidget extends StatelessWidget {
                     Spacer(),
                     Align(
                       alignment: Alignment.topRight,
-                      child: SvgPicture.asset(Assets.plusIcon),
+                      child: BlocListener<CartCubit, CartState>(
+                        listener: (context, state) {
+                          if (state is AddToCartSuccess) {
+                            Dialogs.successDialog(
+                              "Product Added to cart successfully",
+                            );
+                          } else if (state is AddToCartError) {
+                            Dialogs.showMessageDialog(state.message);
+                          }
+                        },
+                        child: InkWell(
+                          onTap: () async {
+                            context.read<CartCubit>().addToCart(
+                              productEntity.id,
+                            );
+                          },
+                          child: SvgPicture.asset(Assets.plusIcon),
+                        ),
+                      ),
                     ),
                   ],
                 ),
