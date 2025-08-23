@@ -10,6 +10,7 @@ class Assets {
   static const String proudctDetailsImage =
       "assets/images/product_image_details.png";
   static const String cartProductImage = "assets/images/cart_product_image.png";
+  static const String shoesImage = "assets/images/shoes_image.png";
   // icons
   static const String cartIcon = "assets/icons/icon _shopping cart_.svg";
   static const String searchIcon = "assets/icons/search_icon.svg";

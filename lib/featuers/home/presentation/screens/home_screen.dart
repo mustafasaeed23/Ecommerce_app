@@ -7,6 +7,7 @@ import 'package:ecommerce/featuers/home/presentation/widgets/home_tab.dart';
 import 'package:ecommerce/featuers/layout/cubit/nav_bar_cubit.dart';
 import 'package:ecommerce/featuers/layout/cubit/nav_bar_state.dart';
 import 'package:ecommerce/featuers/products/presentation/screens/products_screen.dart';
+import 'package:ecommerce/featuers/wishlist/presentation/screens/wishList_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -30,7 +31,7 @@ class HomeScreen extends StatelessWidget {
               children: [
                 const HomeTab(),
                 const ProductsScreen(),
-                const Center(child: Text("Cart")),
+                const WishlistScreen(),
                 const Center(child: Text("Profile")),
               ],
             ),
