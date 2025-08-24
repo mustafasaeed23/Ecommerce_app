@@ -26,6 +26,7 @@ class AuthRepository implements AuthContractRepo {
         print("token ${response.token}");
         print("user ${response.user}");
         await authLocalDataSource.saveToken(response.token!);
+        await authLocalDataSource.saveUser(response.user!);
         return Right(response.user!);
         
       } else {
@@ -42,6 +43,7 @@ class AuthRepository implements AuthContractRepo {
       final response = await authRemoteDataSource.login(loginRequest);
       if (response.token != null && response.user != null) {
         await authLocalDataSource.saveToken(response.token!);
+        await authLocalDataSource.saveUser(response.user!);
         return Right(response.user!);
       } else {
         return Left(Failure());
