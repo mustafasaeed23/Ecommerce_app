@@ -13,6 +13,12 @@ class CustomTextFormField extends StatefulWidget {
     required this.validator,
     this.obscureText = false,
     this.onChanged,
+    this.borderColor,
+    this.textColor,
+    this.readOnly,
+    this.suffixIcon,
+    this.headerTextColor,
+    this.fontSize
   });
 
   final String headerText;
@@ -22,6 +28,12 @@ class CustomTextFormField extends StatefulWidget {
   final String? Function(String?) validator;
   final bool obscureText;
   final Function(String)? onChanged;
+  final Color? borderColor;
+  final Color? textColor;
+  final Color? headerTextColor;
+  final double? fontSize;
+  final bool? readOnly;
+  final Widget? suffixIcon;
 
   @override
   State<CustomTextFormField> createState() => _CustomTextFormFieldState();
@@ -43,13 +55,17 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       children: [
         Text(
           widget.headerText,
-          style: FontsStyle.semiBold.copyWith(color: AppColors.whiteColor),
+          style: FontsStyle.semiBold.copyWith(
+            color: widget.headerTextColor ?? AppColors.whiteColor,
+            fontSize: widget.fontSize,
+          ),
         ),
         SizedBox(height: 10.h),
         SizedBox(
           height: 52.h,
           width: double.infinity,
           child: TextFormField(
+            readOnly: widget.readOnly ?? false,
             controller: widget.controller,
             keyboardType: widget.keyboardType,
             validator: widget.validator,
@@ -59,7 +75,9 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
               filled: true,
               fillColor: AppColors.whiteColor,
               hintText: widget.hintText,
-              hintStyle: FontsStyle.light.copyWith(color: Colors.grey),
+              hintStyle: FontsStyle.light.copyWith(
+                color: widget.textColor ?? Colors.grey,
+              ),
               contentPadding: const EdgeInsets.symmetric(
                 horizontal: 20,
                 vertical: 15,
@@ -72,25 +90,31 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                       ),
                       onPressed: () => setState(() => isObscured = !isObscured),
                     )
-                  : null,
+                  : widget.suffixIcon,
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide.none,
+                borderRadius: BorderRadius.circular(15.r),
+                borderSide: BorderSide(
+                  color: widget.borderColor ?? Colors.transparent,
+                ),
               ),
               enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide.none,
+                borderRadius: BorderRadius.circular(15.r),
+                borderSide: BorderSide(
+                  color: widget.borderColor ?? Colors.transparent,
+                ),
               ),
               focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide.none,
+                borderRadius: BorderRadius.circular(15.r),
+                borderSide: BorderSide(
+                  color: widget.borderColor ?? Colors.transparent,
+                ),
               ),
               errorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(15.r),
                 borderSide: const BorderSide(color: Colors.red),
               ),
               focusedErrorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(15.r),
                 borderSide: const BorderSide(color: Colors.red),
               ),
             ),

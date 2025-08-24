@@ -71,6 +71,8 @@ import 'package:ecommerce/featuers/products/domain/usecases/products_use_case.da
     as _i456;
 import 'package:ecommerce/featuers/products/presentation/cubit/products_cubit.dart'
     as _i316;
+import 'package:ecommerce/featuers/profile/cubit/profile_cubit.dart'
+    as _i630;
 import 'package:ecommerce/featuers/wishlist/data/datasources/wishlist_remote_api_data_source.dart'
     as _i754;
 import 'package:ecommerce/featuers/wishlist/data/datasources/wishlist_remote_data_source.dart'
@@ -145,6 +147,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.singleton<_i790.RegisterUseCase>(
       () => _i790.RegisterUseCase(gh<_i677.AuthContractRepo>()),
+    );
+    gh.factory<_i630.ProfileCubit>(
+      () => _i630.ProfileCubit(gh<_i196.AuthLocalDataSource>()),
     );
     gh.lazySingleton<_i406.HomeContractRepo>(
       () => _i308.HomeImplyRepo(gh<_i986.HomeRemoteDataSource>()),
