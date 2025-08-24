@@ -7,4 +7,5 @@ class ApiConstants {
   static const String productsEndPoint = "products";
   static const String cartEndPoint = "cart";
   static const String wishlistEndPoint = "wishlist";
+  static const String ordersEndPoint = "orders/user";
 }
