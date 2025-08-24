@@ -71,6 +71,20 @@ import 'package:ecommerce/featuers/products/domain/usecases/products_use_case.da
     as _i456;
 import 'package:ecommerce/featuers/products/presentation/cubit/products_cubit.dart'
     as _i316;
+import 'package:ecommerce/featuers/wishlist/data/datasources/wishlist_remote_api_data_source.dart'
+    as _i754;
+import 'package:ecommerce/featuers/wishlist/data/datasources/wishlist_remote_data_source.dart'
+    as _i195;
+import 'package:ecommerce/featuers/wishlist/data/repositories/wishlist_imply_repo.dart'
+    as _i951;
+import 'package:ecommerce/featuers/wishlist/domain/repositories/wishlist_contract_repo.dart'
+    as _i365;
+import 'package:ecommerce/featuers/wishlist/domain/usecases/add_to_wishlist_use_case.dart'
+    as _i354;
+import 'package:ecommerce/featuers/wishlist/domain/usecases/get_user_wishlist_use_case.dart'
+    as _i250;
+import 'package:ecommerce/featuers/wishlist/presentation/cubit/wishlist_cubit.dart'
+    as _i741;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
@@ -92,6 +106,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.singleton<_i923.AuthRemoteDataSource>(
       () => _i23.AuthApiRemoteDataSource(gh<_i361.Dio>()),
+    );
+    gh.lazySingleton<_i195.WishlistRemoteDataSource>(
+      () => _i754.WishlistRemoteApiDataSource(gh<_i361.Dio>()),
     );
     gh.lazySingleton<_i57.CartRemoteDataSource>(
       () => _i933.CartRemoteApiDataSource(gh<_i361.Dio>()),
@@ -122,6 +139,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.singleton<_i939.LoginUseCase>(
       () => _i939.LoginUseCase(gh<_i677.AuthContractRepo>()),
+    );
+    gh.lazySingleton<_i365.WishlistContractRepo>(
+      () => _i951.WishlistImplyRepo(gh<_i195.WishlistRemoteDataSource>()),
     );
     gh.singleton<_i790.RegisterUseCase>(
       () => _i790.RegisterUseCase(gh<_i677.AuthContractRepo>()),
@@ -164,10 +184,22 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i731.DeleteItemUseCase>(),
       ),
     );
+    gh.lazySingleton<_i250.GetUserWishlistUseCase>(
+      () => _i250.GetUserWishlistUseCase(gh<_i365.WishlistContractRepo>()),
+    );
+    gh.lazySingleton<_i354.AddToWishlistUseCase>(
+      () => _i354.AddToWishlistUseCase(gh<_i365.WishlistContractRepo>()),
+    );
     gh.factory<_i0.HomeCubit>(
       () => _i0.HomeCubit(
         gh<_i767.BrandsUseCase>(),
         gh<_i475.CategoriesUseCase>(),
+      ),
+    );
+    gh.factory<_i741.WishlistCubit>(
+      () => _i741.WishlistCubit(
+        gh<_i250.GetUserWishlistUseCase>(),
+        gh<_i354.AddToWishlistUseCase>(),
       ),
     );
     return this;

@@ -10,6 +10,7 @@ import 'package:ecommerce/featuers/cart/presentation/cubit/cart_cubit.dart';
 import 'package:ecommerce/featuers/cart/presentation/cubit/cart_state.dart';
 import 'package:ecommerce/featuers/products/domain/entities/product_entity.dart';
 import 'package:ecommerce/featuers/products/presentation/widgets/price_widget.dart';
+import 'package:ecommerce/featuers/wishlist/presentation/cubit/wishlist_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -48,7 +49,11 @@ class ProductItemWidget extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 8.0.w, vertical: 4.h),
                 child: Align(
                   alignment: Alignment.topRight,
-                  child: FavouriteIconWidget(),
+                  child: FavouriteIconWidget(
+                    onTap: () =>
+                        context.read<WishlistCubit>()
+                          ..addToWishlist(productEntity.id),
+                  ),
                 ),
               ),
             ],

@@ -5,6 +5,7 @@ import 'package:ecommerce/featuers/cart/presentation/cubit/cart_cubit.dart';
 import 'package:ecommerce/featuers/products/presentation/cubit/products_cubit.dart';
 import 'package:ecommerce/featuers/products/presentation/cubit/products_state.dart';
 import 'package:ecommerce/featuers/products/presentation/widgets/product_item_widget.dart';
+import 'package:ecommerce/featuers/wishlist/presentation/cubit/wishlist_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,6 +21,7 @@ class ProductsListWidget extends StatelessWidget {
               serviceLocator.get<ProductsCubit>()..getProducts(),
         ),
         BlocProvider(create: (context) => serviceLocator.get<CartCubit>()),
+        BlocProvider(create: (context) => serviceLocator.get<WishlistCubit>()),
       ],
       child: BlocBuilder<ProductsCubit, ProductsState>(
         builder: (context, state) {
