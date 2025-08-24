@@ -11,10 +11,23 @@ import 'package:injectable/injectable.dart';
 
 @singleton
 class AuthCubit extends Cubit<AuthState> {
-  AuthCubit(this.loginUseCase, this.registerUseCase) : super(AuthInitial());
+  AuthCubit(this.loginUseCase, this.registerUseCase, ) : super(AuthInitial());
 
   final LoginUseCase loginUseCase;
   final RegisterUseCase registerUseCase;
+  // final AuthSharedPrefLocalDataSource local;
+
+  /// Called on app start (Splash)
+  // Future<void> bootstrap() async {
+  //   emit(AuthChecking());
+  //   final token = await local.getToken(); // implement getToken()
+  //   if (token != null && token.isNotEmpty) {
+  //     emit(AuthAuthenticated());
+  //   } else {
+  //     emit(AuthUnauthenticated());
+  //   }
+  // }
+
   Future<void> register(RegisterRequest registerRequest) async {
     emit(RegisterLoading());
     final result = await registerUseCase.call(registerRequest);

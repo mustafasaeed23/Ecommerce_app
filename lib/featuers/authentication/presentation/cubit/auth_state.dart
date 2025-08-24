@@ -2,6 +2,10 @@ abstract class AuthState {}
 
 class AuthInitial extends AuthState {}
 
+class AuthChecking extends AuthState {}            // splash / boot
+class AuthAuthenticated extends AuthState {}       // user already logged in
+class AuthUnauthenticated extends AuthState {}  
+
 class LoginLoading extends AuthState {}
 
 class LoginSuccess extends AuthState {}

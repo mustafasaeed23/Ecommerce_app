@@ -12,6 +12,7 @@ import 'package:ecommerce/featuers/products/domain/entities/product_entity.dart'
 import 'package:ecommerce/featuers/products/presentation/widgets/price_widget.dart';
 import 'package:ecommerce/featuers/products/presentation/widgets/product_carsouel_widget.dart';
 import 'package:ecommerce/featuers/products/presentation/widgets/size_widget.dart';
+import 'package:ecommerce/featuers/wishlist/presentation/cubit/wishlist_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -28,185 +29,189 @@ class ProductDetailsScreen extends StatelessWidget {
       return const Scaffold(body: Center(child: Text('Product not provided')));
     }
     final product = args;
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
+    return BlocProvider(
+      create: (context) => serviceLocator.get<WishlistCubit>(),
+      child: Scaffold(
         backgroundColor: Colors.white,
-        leading: InkWell(
-          onTap: () => Navigator.pop(context),
-          child: Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: SvgPicture.asset(Assets.arrowBackIcon),
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          leading: InkWell(
+            onTap: () => Navigator.pop(context),
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: SvgPicture.asset(Assets.arrowBackIcon),
+            ),
           ),
+          title: Text(
+            "Product Details",
+            style: FontsStyle.bold.copyWith(
+              fontSize: 16.r,
+              color: AppColors.mainColor,
+            ),
+          ),
+          centerTitle: true,
+          actions: [
+            SvgPicture.asset(Assets.searchIcon),
+            SizedBox(width: 10.w),
+            InkWell(
+              onTap: () {
+                Navigator.pushNamed(context, Routes.cartScreen);
+              },
+              child: SvgPicture.asset(Assets.cartIcon),
+            ),
+            SizedBox(width: 15.w),
+          ],
         ),
-        title: Text(
-          "Product Details",
-          style: FontsStyle.bold.copyWith(
-            fontSize: 16.r,
-            color: AppColors.mainColor,
+        body: Padding(
+          padding: EdgeInsetsGeometry.symmetric(
+            horizontal: 15.w,
+            vertical: 10.h,
           ),
-        ),
-        centerTitle: true,
-        actions: [
-          SvgPicture.asset(Assets.searchIcon),
-          SizedBox(width: 10.w),
-          InkWell(
-            onTap: () {
-              Navigator.pushNamed(context, Routes.cartScreen);
-            },
-            child: SvgPicture.asset(Assets.cartIcon),
-          ),
-          SizedBox(width: 15.w),
-        ],
-      ),
-      body: Padding(
-        padding: EdgeInsetsGeometry.symmetric(horizontal: 15.w, vertical: 10.h),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ProductImageCarousel(imageUrls: product.images),
-            SizedBox(height: 15.h),
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    product.title,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ProductImageCarousel(imageUrls: product.images),
+              SizedBox(height: 15.h),
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      product.title,
+                      style: FontsStyle.medium.copyWith(
+                        fontSize: 18.r,
+                        color: AppColors.mainColor,
+                      ),
+                    ),
+                  ),
+                  Spacer(),
+                  PriceWidget(
+                    price: product.price,
+                    priceAfterDiscount: product.priceAfterDiscount,
+                    direction: Axis.vertical,
+                  ),
+                ],
+              ),
+              SizedBox(height: 15.h),
+              Row(
+                children: [
+                  Container(
+                    width: 102.w,
+                    height: 34.h,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20.r),
+                      border: Border.all(color: AppColors.mainColor, width: 1),
+                    ),
+                    child: Center(
+                      child: Text(
+                        "${product.sold.toString()} Sold",
+                        style: FontsStyle.medium.copyWith(
+                          fontSize: 12.r,
+                          color: AppColors.mainColor,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 10.w),
+                  SvgPicture.asset(Assets.starIcon),
+                  SizedBox(width: 5.w),
+                  Text(
+                    product.ratingsAverage.toString(),
                     style: FontsStyle.medium.copyWith(
-                      fontSize: 18.r,
+                      fontSize: 14.r,
                       color: AppColors.mainColor,
                     ),
                   ),
-                ),
-                Spacer(),
-                PriceWidget(
-                  price: product.price,
-                  priceAfterDiscount: product.priceAfterDiscount,
-                  direction: Axis.vertical,
-                ),
-              ],
-            ),
-            SizedBox(height: 15.h),
-            Row(
-              children: [
-                Container(
-                  width: 102.w,
-                  height: 34.h,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20.r),
-                    border: Border.all(color: AppColors.mainColor, width: 1),
-                  ),
-                  child: Center(
-                    child: Text(
-                      "${product.sold.toString()} Sold",
-                      style: FontsStyle.medium.copyWith(
-                        fontSize: 12.r,
-                        color: AppColors.mainColor,
-                      ),
+                  SizedBox(width: 5.w),
+                  Text(
+                    "(${product.ratingsQuantity.toString()})",
+                    style: FontsStyle.medium.copyWith(
+                      fontSize: 14.r,
+                      color: AppColors.mainColor,
                     ),
                   ),
-                ),
-                SizedBox(width: 10.w),
-                SvgPicture.asset(Assets.starIcon),
-                SizedBox(width: 5.w),
-                Text(
-                  product.ratingsAverage.toString(),
-                  style: FontsStyle.medium.copyWith(
-                    fontSize: 14.r,
-                    color: AppColors.mainColor,
-                  ),
-                ),
-                SizedBox(width: 5.w),
-                Text(
-                  "(${product.ratingsQuantity.toString()})",
-                  style: FontsStyle.medium.copyWith(
-                    fontSize: 14.r,
-                    color: AppColors.mainColor,
-                  ),
-                ),
-                Spacer(),
-                QuantityWidget(
-                  
-                ),
-              ],
-            ),
-            SizedBox(height: 15.h),
-            Text(
-              "Description",
-              style: FontsStyle.medium.copyWith(
-                fontSize: 18.r,
-                color: AppColors.mainColor,
+                  Spacer(),
+                  QuantityWidget(),
+                ],
               ),
-            ),
-            SizedBox(height: 10.h),
-            ReadMoreText(
-              product.description,
-              trimLines: 2,
-              trimMode: TrimMode.Line,
-              trimCollapsedText: '  See more',
-              trimExpandedText: '  See less',
-              style: FontsStyle.regular.copyWith(
-                fontSize: 14.r,
-                color: AppColors.mainColor,
+              SizedBox(height: 15.h),
+              Text(
+                "Description",
+                style: FontsStyle.medium.copyWith(
+                  fontSize: 18.r,
+                  color: AppColors.mainColor,
+                ),
               ),
-              moreStyle: FontsStyle.medium.copyWith(
-                fontSize: 14.r,
-                color: AppColors.mainColor,
-                fontWeight: FontWeight.bold,
+              SizedBox(height: 10.h),
+              ReadMoreText(
+                product.description,
+                trimLines: 2,
+                trimMode: TrimMode.Line,
+                trimCollapsedText: '  See more',
+                trimExpandedText: '  See less',
+                style: FontsStyle.regular.copyWith(
+                  fontSize: 14.r,
+                  color: AppColors.mainColor,
+                ),
+                moreStyle: FontsStyle.medium.copyWith(
+                  fontSize: 14.r,
+                  color: AppColors.mainColor,
+                  fontWeight: FontWeight.bold,
+                ),
+                lessStyle: FontsStyle.medium.copyWith(
+                  fontSize: 14.r,
+                  color: AppColors.mainColor,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-              lessStyle: FontsStyle.medium.copyWith(
-                fontSize: 14.r,
-                color: AppColors.mainColor,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Spacer(),
-            Row(
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Total Price",
-                      style: FontsStyle.medium.copyWith(
-                        fontSize: 18.r,
-                        color: Colors.grey,
+              Spacer(),
+              Row(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Total Price",
+                        style: FontsStyle.medium.copyWith(
+                          fontSize: 18.r,
+                          color: Colors.grey,
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 3.h),
-                    Text(
-                      "EGP 3500",
-                      style: FontsStyle.medium.copyWith(
-                        fontSize: 18.r,
-                        color: AppColors.mainColor,
+                      SizedBox(height: 3.h),
+                      Text(
+                        "EGP 3500",
+                        style: FontsStyle.medium.copyWith(
+                          fontSize: 18.r,
+                          color: AppColors.mainColor,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                SizedBox(width: 15.w),
-                Expanded(
-                  child: BlocListener<CartCubit, CartState>(
-                    listener: (context, state) {
-                      if (state is AddToCartSuccess) {
-                        Dialogs.successDialog(
-                          "Product Added to cart successfully",
-                        );
-                      } else if (state is AddToCartError) {
-                        Dialogs.showMessageDialog(state.message);
-                      }
-                    },
-                    child: AddToCartWidget(
-                      onTap: () {
-                        context.read<CartCubit>().addToCart(product.id);
+                    ],
+                  ),
+                  SizedBox(width: 15.w),
+                  Expanded(
+                    child: BlocListener<CartCubit, CartState>(
+                      listener: (context, state) {
+                        if (state is AddToCartSuccess) {
+                          Dialogs.successDialog(
+                            "Product Added to cart successfully",
+                          );
+                        } else if (state is AddToCartError) {
+                          Dialogs.showMessageDialog(state.message);
+                        }
                       },
+                      child: AddToCartWidget(
+                        onTap: () {
+                          context.read<CartCubit>().addToCart(product.id);
+                        },
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            SizedBox(height: 30.h),
-          ],
+                ],
+              ),
+              SizedBox(height: 30.h),
+            ],
+          ),
         ),
       ),
     );
