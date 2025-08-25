@@ -69,6 +69,8 @@ import 'package:ecommerce/featuers/orders/data/repositories/orders_imply_repo.da
     as _i1046;
 import 'package:ecommerce/featuers/orders/domain/repositories/orders_contract_repo.dart'
     as _i379;
+import 'package:ecommerce/featuers/orders/domain/usecases/create_order_use_case.dart'
+    as _i787;
 import 'package:ecommerce/featuers/orders/domain/usecases/get_all_orders_use_case.dart'
     as _i976;
 import 'package:ecommerce/featuers/orders/presentation/cubit/orders_cubit.dart'
@@ -174,14 +176,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i976.GetAllOrdersUseCase>(
       () => _i976.GetAllOrdersUseCase(gh<_i379.OrdersContractRepo>()),
     );
+    gh.lazySingleton<_i787.CreateOrderUseCase>(
+      () => _i787.CreateOrderUseCase(gh<_i379.OrdersContractRepo>()),
+    );
     gh.lazySingleton<_i767.BrandsUseCase>(
       () => _i767.BrandsUseCase(gh<_i406.HomeContractRepo>()),
     );
     gh.lazySingleton<_i475.CategoriesUseCase>(
       () => _i475.CategoriesUseCase(gh<_i406.HomeContractRepo>()),
-    );
-    gh.factory<_i196.OrdersCubit>(
-      () => _i196.OrdersCubit(gh<_i976.GetAllOrdersUseCase>()),
     );
     gh.factory<_i316.ProductsCubit>(
       () => _i316.ProductsCubit(gh<_i456.ProductsUseCase>()),
@@ -217,6 +219,12 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i354.AddToWishlistUseCase>(
       () => _i354.AddToWishlistUseCase(gh<_i365.WishlistContractRepo>()),
+    );
+    gh.factory<_i196.OrdersCubit>(
+      () => _i196.OrdersCubit(
+        gh<_i976.GetAllOrdersUseCase>(),
+        gh<_i787.CreateOrderUseCase>(),
+      ),
     );
     gh.factory<_i0.HomeCubit>(
       () => _i0.HomeCubit(

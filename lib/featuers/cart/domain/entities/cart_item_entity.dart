@@ -4,7 +4,7 @@ class CartItemEntity {
    final int count;
   final String sId;
   final CartProductEntity product;
-  final int price;
+  final double price;
 
   CartItemEntity({
     required this.count,

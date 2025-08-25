@@ -3,15 +3,14 @@ import 'package:ecommerce/featuers/cart/data/models/cart_response.dart';
 import 'package:ecommerce/featuers/cart/domain/entities/cart_entity.dart';
 
 class CartModel extends CartEntity {
-  final String? sId;
   final String? cartOwner;
   final String? createdAt;
   final String? updatedAt;
   final int? iV;
 
   CartModel({
-    this.sId,
     this.cartOwner,
+    required super.sId,
     required super.totalCartPrice,
     this.createdAt,
     this.updatedAt,
@@ -29,7 +28,7 @@ class CartModel extends CartEntity {
       createdAt: json['createdAt'],
       updatedAt: json['updatedAt'],
       iV: json['__v'],
-      totalCartPrice: json['totalCartPrice'],
+      totalCartPrice: json['totalCartPrice'].toDouble(),
     );
   }
 }

@@ -2,6 +2,7 @@ import 'package:ecommerce/core/di/service_locator.dart';
 import 'package:ecommerce/core/theme/app_colors.dart';
 import 'package:ecommerce/core/theme/assets.dart';
 import 'package:ecommerce/core/theme/fonts_style.dart';
+import 'package:ecommerce/core/utils/dialogs.dart';
 import 'package:ecommerce/core/widgets/custom_button.dart';
 import 'package:ecommerce/core/widgets/loading_widget.dart';
 import 'package:ecommerce/featuers/cart/presentation/cubit/cart_cubit.dart';
@@ -9,10 +10,12 @@ import 'package:ecommerce/featuers/cart/presentation/cubit/cart_state.dart';
 import 'package:ecommerce/featuers/cart/presentation/widgets/cart_item_widget.dart';
 import 'package:ecommerce/featuers/cart/presentation/widgets/cart_list.dart';
 import 'package:ecommerce/featuers/cart/presentation/widgets/check_out_widget.dart';
+import 'package:ecommerce/featuers/orders/presentation/cubit/orders_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:lottie/lottie.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -25,8 +28,11 @@ class _CartScreenState extends State<CartScreen> {
   final cartCubit = serviceLocator.get<CartCubit>();
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => cartCubit..getCart(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => cartCubit..getCart()),
+        BlocProvider(create: (context) => serviceLocator.get<OrdersCubit>()),
+      ],
       child: Scaffold(
         appBar: AppBar(
           leading: InkWell(
@@ -64,24 +70,55 @@ class _CartScreenState extends State<CartScreen> {
                 } else {
                   return Column(
                     children: [
-                      Expanded(
-                        child: ListView.separated(
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          physics: BouncingScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            return CartItemWidget(
-                              cartItemEntity:
-                                  cartCubit.cartEntity.products[index],
-                              cartCubit: cartCubit,
-                            );
-                          },
-                          separatorBuilder: (context, index) =>
-                              SizedBox(height: 12.h),
-                          itemCount: cartCubit.cartEntity.products.length,
+                      if (cartCubit.cartEntity.products.isEmpty)
+                        Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Center(
+                                child: Lottie.asset(
+                                  Assets.emptyCartAnimation,
+                                  width: 200.w,
+                                  height: 200.h,
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                              SizedBox(height: 20.h),
+                              Text(
+                                "Your cart is empty",
+                                style: FontsStyle.semiBold.copyWith(
+                                  fontSize: 13.r,
+                                  color: AppColors.mainColor,
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      else
+                        Expanded(
+                          child: ListView.separated(
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            physics: BouncingScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              return CartItemWidget(
+                                cartItemEntity:
+                                    cartCubit.cartEntity.products[index],
+                                cartCubit: cartCubit,
+                              );
+                            },
+                            separatorBuilder: (context, index) =>
+                                SizedBox(height: 12.h),
+                            itemCount: cartCubit.cartEntity.products.length,
+                          ),
                         ),
-                      ),
                       CheckOutWidget(
+                        onPressed: () {
+                          Dialogs.showCreateOrderDialog(
+                            context,
+                            cartCubit.cartEntity.sId,
+                          );
+                        },
                         totalPrice: cartCubit.cartEntity.totalCartPrice
                             .toString(),
                       ),

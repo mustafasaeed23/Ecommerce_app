@@ -27,4 +27,8 @@ class Assets {
   static const String selectedHeartIcon =
       "assets/icons/selected_heart_icon.svg";
   static const String deleteIcon = "assets/icons/detete_icon.svg";
+
+  // animations
+  static const String emptyCartAnimation =
+      "assets/animations/Cart Empty State.json";
 }
