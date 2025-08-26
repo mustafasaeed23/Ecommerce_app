@@ -5,13 +5,13 @@ class CartResponse {
   final String? status;
   final int? numOfCartItems;
   final String? cartId;
-  final CartModel data;
+  final CartModel? data;
 
   CartResponse({
     this.status,
     this.numOfCartItems,
     this.cartId,
-    required this.data,
+    this.data,
   });
 
   factory CartResponse.fromJson(Map<String, dynamic> json) {
@@ -19,7 +19,7 @@ class CartResponse {
       status: json['status'],
       numOfCartItems: json['numOfCartItems'],
       cartId: json['cartId'],
-      data: CartModel.fromJson(json['data']),
+      data: json['data'] != null ? CartModel.fromJson(json['data']) : null,
     );
   }
 }

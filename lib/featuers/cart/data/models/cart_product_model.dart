@@ -10,10 +10,10 @@ class CartProductModel extends CartProductEntity {
 
   factory CartProductModel.fromJson(Map<String, dynamic> json) {
     return CartProductModel(
-      sId: json['_id'],
-      title: json['title'],
-      imageCover: json['imageCover'],
-      ratingsAverage: json['ratingsAverage'],
+      sId: json['_id'] ?? '',
+      title: json['title'] ?? '',
+      imageCover: json['imageCover'] ?? '',
+      ratingsAverage: (json['ratingsAverage'] as num?)?.toDouble() ?? 0.0,
     );
   }
 }

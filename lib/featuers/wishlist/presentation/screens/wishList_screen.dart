@@ -27,7 +27,7 @@ class WishlistScreen extends StatelessWidget {
               BlocBuilder<WishlistCubit, WishlistState>(
                 builder: (context, state) {
                   if (state is WishlistLoading) {
-                    LoadingWidget();
+                    return LoadingWidget();
                   } else if (state is WishlistLoaded) {
                     return Expanded(
                       child: ListView.separated(
@@ -45,7 +45,7 @@ class WishlistScreen extends StatelessWidget {
                   } else if (state is WishlistError) {
                     return Center(child: Text(state.message));
                   }
-                  return Container();
+                  return Text("error");
                 },
               ),
             ],

@@ -22,4 +22,31 @@ class OrdersRemoteApiDataSource implements OrdersRemoteDataSource {
       throw RemoteException("Failed To get Orders");
     }
   }
+
+  @override
+  Future<OrderModel> createOrder({
+    required String cartId,
+    required String details,
+    required String phone,
+    required String city,
+  }) async {
+    try {
+      final response = await dio.post(
+        "${ApiConstants.createOrderEndPoint}/$cartId",
+        data: {
+          "shippingAddress": {"details": details, "phone": phone, "city": city},
+        },
+      );
+
+      if (response.data["status"] != "success") {
+        throw RemoteException(
+          response.data["message"] ?? "Failed to create order",
+        );
+      }
+
+      return OrderModel.fromJson(response.data["data"]);
+    } catch (exception) {
+      throw RemoteException("Failed to create Order");
+    }
+  }
 }
