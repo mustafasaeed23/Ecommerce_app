@@ -17,7 +17,7 @@ class CartImplyRepo implements CartContractRepo {
     try {
       final response = await cartRemoteDataSource.getCart();
       print("response ${response.data}");
-      return Right(response.data);
+      return Right(response.data!);
     } on RemoteException catch (err) {
       print("error ${err.message}");
       return Left(Failure(err.message));
@@ -44,7 +44,7 @@ class CartImplyRepo implements CartContractRepo {
         productId,
         quantity,
       );
-      return Right(response.data);
+      return Right(response.data!);
     } on RemoteException catch (err) {
       return Left(Failure(err.message));
     }
@@ -54,7 +54,7 @@ class CartImplyRepo implements CartContractRepo {
   Future<Either<Failure, CartEntity>> deleteFromCart(String productId) async {
     try {
       final response = await cartRemoteDataSource.deleteFromCart(productId);
-      return Right(response.data);
+      return Right(response.data!);
     } on RemoteException catch (err) {
       return Left(Failure(err.message));
     }

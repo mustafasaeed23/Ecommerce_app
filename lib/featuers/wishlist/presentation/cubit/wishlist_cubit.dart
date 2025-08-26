@@ -12,8 +12,6 @@ class WishlistCubit extends Cubit<WishlistState> {
 
   final GetUserWishlistUseCase getUserWishlistUseCase;
   final AddToWishlistUseCase addToWishListUseCase;
-
-  // 1) init list instead of late
   List<WishlistProductEntity> wishlistProductEntity = [];
 
   Future<void> getUserWishlist() async {
@@ -27,10 +25,8 @@ class WishlistCubit extends Cubit<WishlistState> {
 
   Future<void> addToWishlist(String productId) async {
     emit(AddToWishListLoading());
-
     final result = await addToWishListUseCase(productId);
     result.fold((l) => emit(AddToWishListError(l.message)), (_) async {
-      // 2) refresh list so the new item appears immediately
       final refreshed = await getUserWishlistUseCase.getUserWishlist();
       refreshed.fold((l) => emit(AddToWishListError(l.message)), (wishlist) {
         wishlistProductEntity = wishlist;

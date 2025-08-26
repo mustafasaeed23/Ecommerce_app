@@ -1,9 +1,11 @@
 import 'package:ecommerce/core/constants/constants.dart';
+import 'package:ecommerce/core/cubit/search_cubit.dart';
 import 'package:ecommerce/core/routes/app_router.dart';
 import 'package:ecommerce/core/routes/routes.dart';
 import 'package:ecommerce/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class EcommerceApp extends StatefulWidget {
@@ -22,13 +24,16 @@ class _EcommerceAppState extends State<EcommerceApp> {
       builder: (context, child) => child!,
       splitScreenMode: true,
       minTextAdapt: true,
-      child: MaterialApp(
-        title: 'Ecommerce',
-        debugShowCheckedModeBanner: false,
-        onGenerateRoute: widget.appRouter.genegratedRoute,
-        initialRoute: Routes.loginScreen,
-        navigatorKey: Constants.navigatorKey,
-        theme: AppTheme.lightTheme,
+      child: BlocProvider(
+        create: (context) => SearchCubit(),
+        child: MaterialApp(
+          title: 'Ecommerce',
+          debugShowCheckedModeBanner: false,
+          onGenerateRoute: widget.appRouter.genegratedRoute,
+          initialRoute: Routes.loginScreen,
+          navigatorKey: Constants.navigatorKey,
+          theme: AppTheme.lightTheme,
+        ),
       ),
     );
   }

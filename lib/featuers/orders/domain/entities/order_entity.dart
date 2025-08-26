@@ -4,9 +4,9 @@ import 'package:ecommerce/featuers/orders/domain/entities/shipping_address_entit
 
 class OrderEntity {
   final ShippingAddressEntity shippingAddress;
-  final int taxPrice;
-  final int shippingPrice;
-  final int totalOrderPrice;
+  final double taxPrice;
+  final double shippingPrice;
+  final double totalOrderPrice;
   final String paymentMethodType;
   final bool isPaid;
   final bool isDelivered;
@@ -15,7 +15,6 @@ class OrderEntity {
   final List<CartItemsEntity> cartItems;
   final int id;
   final String createdAt;
-
 
   OrderEntity({
     required this.shippingAddress,

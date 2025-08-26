@@ -13,7 +13,8 @@ class CategoriesSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => serviceLocator.get<HomeCubit>()..getCategories(),
+      create: (context) =>
+          serviceLocator.get<HomeCubit>()..getCategories(context),
       child: SizedBox(
         height: 300.h,
         child: BlocBuilder<HomeCubit, HomeState>(

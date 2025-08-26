@@ -20,15 +20,16 @@ class CartModel extends CartEntity {
 
   factory CartModel.fromJson(Map<String, dynamic> json) {
     return CartModel(
-      sId: json['_id'],
+      sId: json['_id'] ?? '',
       cartOwner: json['cartOwner'],
-      products: (json['products'] as List<dynamic>)
+      products: (json['products'] as List<dynamic>? ?? [])
           .map((e) => CartItemModel.fromJson(e))
           .toList(),
       createdAt: json['createdAt'],
       updatedAt: json['updatedAt'],
       iV: json['__v'],
-      totalCartPrice: json['totalCartPrice'].toDouble(),
+      totalCartPrice: (json['totalCartPrice'] as num?)?.toDouble() ?? 0.0,
     );
   }
 }
+
