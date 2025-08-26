@@ -203,9 +203,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i475.CategoriesUseCase>(
       () => _i475.CategoriesUseCase(gh<_i406.HomeContractRepo>()),
     );
-    gh.factory<_i196.OrdersCubit>(
-      () => _i196.OrdersCubit(gh<_i976.GetAllOrdersUseCase>()),
-    );
     gh.lazySingleton<_i891.GetUserAddressUseCase>(
       () => _i891.GetUserAddressUseCase(gh<_i870.AddressContractRepo>()),
     );
