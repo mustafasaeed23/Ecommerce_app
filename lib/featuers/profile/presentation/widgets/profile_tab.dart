@@ -3,6 +3,8 @@ import 'package:ecommerce/core/theme/app_colors.dart';
 import 'package:ecommerce/core/theme/fonts_style.dart';
 import 'package:ecommerce/core/widgets/custom_text_form_field.dart';
 import 'package:ecommerce/core/widgets/loading_widget.dart';
+import 'package:ecommerce/featuers/address/presentation/cubit/address_cubit.dart';
+import 'package:ecommerce/featuers/address/presentation/cubit/address_state.dart';
 import 'package:ecommerce/featuers/authentication/domain/entities/user_entity.dart';
 import 'package:ecommerce/featuers/profile/cubit/profile_cubit.dart';
 import 'package:ecommerce/featuers/profile/cubit/profile_state.dart';
@@ -14,8 +16,17 @@ class ProfileTab extends StatelessWidget {
   const ProfileTab({super.key});
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => serviceLocator.get<ProfileCubit>()..loadProfile(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) =>
+              serviceLocator.get<ProfileCubit>()..loadProfile(),
+        ),
+        BlocProvider(
+          create: (context) =>
+              serviceLocator.get<AddressCubit>()..getUserAddress(),
+        ),
+      ],
       child: BlocBuilder<ProfileCubit, ProfileState>(
         builder: (context, state) {
           if (state is ProfileLoading || state is ProfileInitial) {
@@ -32,7 +43,7 @@ class ProfileTab extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Welcome, ${user.name}",
+                      "Welcome,${user.name}",
                       style: FontsStyle.bold.copyWith(
                         fontSize: 18,
                         color: AppColors.mainColor,
@@ -99,20 +110,32 @@ class ProfileTab extends StatelessWidget {
                     ),
                     SizedBox(height: 15.h),
 
-                    CustomTextFormField(
-                      headerText: "Your Address",
-                      headerTextColor: AppColors.mainColor,
-                      fontSize: 18.r,
-                      hintText: "City, Country",
-                      textColor: AppColors.mainColor,
-                      borderColor: AppColors.mainColor.withOpacity(0.3),
-                      controller: TextEditingController(),
-                      suffixIcon: Icon(
-                        Icons.mode_edit_outline_outlined,
-                        color: AppColors.mainColor,
-                      ),
-                      keyboardType: TextInputType.streetAddress,
-                      validator: (_) => null,
+                    BlocConsumer<AddressCubit, AddressState>(
+                      listener: (context, state) {
+                        if (state is AddressFailure) {}
+                      },
+                      builder: (context, state) {
+                        String? addressText;
+                        if (state is AddressSuccess &&
+                            state.address.isNotEmpty) {
+                          addressText = state.address.first.city;
+                        }
+                        return CustomTextFormField(
+                          headerText: "Your Address",
+                          headerTextColor: AppColors.mainColor,
+                          fontSize: 18.r,
+                          hintText: addressText ?? "No Address",
+                          textColor: AppColors.mainColor,
+                          borderColor: AppColors.mainColor.withOpacity(0.3),
+                          controller: TextEditingController(),
+                          suffixIcon: Icon(
+                            Icons.mode_edit_outline_outlined,
+                            color: AppColors.mainColor,
+                          ),
+                          keyboardType: TextInputType.streetAddress,
+                          validator: (_) => null,
+                        );
+                      },
                     ),
                   ],
                 ),
