@@ -1,3 +1,4 @@
+import 'package:ecommerce/core/cubit/search_cubit.dart';
 import 'package:ecommerce/core/di/service_locator.dart';
 import 'package:ecommerce/core/routes/routes.dart';
 import 'package:ecommerce/core/theme/assets.dart';
@@ -5,16 +6,25 @@ import 'package:ecommerce/core/theme/fonts_style.dart';
 import 'package:ecommerce/core/theme/app_colors.dart';
 import 'package:ecommerce/core/widgets/search_widget.dart';
 import 'package:ecommerce/featuers/home/presentation/cubit/home_cubit.dart';
+import 'package:ecommerce/featuers/home/presentation/cubit/home_state.dart';
 import 'package:ecommerce/featuers/home/presentation/widgets/banners_widget.dart';
 import 'package:ecommerce/featuers/home/presentation/widgets/brands_section.dart';
 import 'package:ecommerce/featuers/home/presentation/widgets/categories_section.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:http/http.dart' as context;
 
-class HomeTab extends StatelessWidget {
+class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
 
+  @override
+  State<HomeTab> createState() => _HomeTabState();
+}
+
+class _HomeTabState extends State<HomeTab> {
+  final homeCubit = serviceLocator.get<HomeCubit>();
   @override
   Widget build(BuildContext context) {
     return SafeArea(

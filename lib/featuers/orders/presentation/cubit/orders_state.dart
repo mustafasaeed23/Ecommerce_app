@@ -12,3 +12,10 @@ class OrdersFailure extends OrdersState {
   final String errorMessage;
   OrdersFailure(this.errorMessage);
 }
+
+class OrderCreatingLoading extends OrdersState {}
+class OrderCreatingSuccess extends OrdersState {}
+class OrderCreatingFailure extends OrdersState {
+  final String errorMessage;
+  OrderCreatingFailure(this.errorMessage);
+}

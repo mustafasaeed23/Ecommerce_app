@@ -13,11 +13,30 @@ class OrdersImplyRepo implements OrdersContractRepo {
   @override
   Future<Either<Failure, List<OrderEntity>>> getUserOrders() async {
     try {
-  final result = await remoteDataSource.getUserOrders();
-  return Right(result);
-} on RemoteException catch (err) {
+      final result = await remoteDataSource.getUserOrders();
+      return Right(result);
+    } on RemoteException catch (err) {
       return Left(Failure(err.message));
     }
   }
-  
+
+  @override
+  Future<Either<Failure, Unit>> createOrder({
+    required String cartId,
+    required String details,
+    required String phone,
+    required String city,
+  }) async {
+    try {
+      await remoteDataSource.createOrder(
+        cartId: cartId,
+        details: details,
+        phone: phone,
+        city: city,
+      );
+      return const Right(unit);
+    } on RemoteException catch (err) {
+      return Left(Failure(err.message));
+    }
+  }
 }

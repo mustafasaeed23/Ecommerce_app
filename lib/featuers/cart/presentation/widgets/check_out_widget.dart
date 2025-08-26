@@ -5,9 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CheckOutWidget extends StatelessWidget {
-  const CheckOutWidget({super.key, required this.totalPrice});
+  const CheckOutWidget({
+    super.key,
+    required this.totalPrice,
+    required this.onPressed,
+  });
 
   final String totalPrice;
+  final void Function() onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +44,7 @@ class CheckOutWidget extends StatelessWidget {
           SizedBox(width: 15.w),
           Expanded(
             child: CustomButton(
-              onPressed: () {},
+              onPressed: onPressed,
               buttonText: "Check out",
               borderRadius: 20.r,
               buttonColor: AppColors.mainColor,

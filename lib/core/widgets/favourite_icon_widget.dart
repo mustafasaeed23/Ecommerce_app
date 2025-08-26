@@ -17,7 +17,7 @@ class FavouriteIconWidget extends StatelessWidget {
     return BlocListener<WishlistCubit, WishlistState>(
       listener: (context, state) {
         if (state is AddToWishListSuccess) {
-          Dialogs.showMessageDialog("Item added to wishlist");
+          Dialogs.customToast(context, "Added to wishlist");
         }
       },
       child: InkWell(

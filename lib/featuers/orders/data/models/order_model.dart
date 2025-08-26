@@ -27,14 +27,21 @@ class OrderModel extends OrderEntity {
   factory OrderModel.fromJson(Map<String, dynamic> json) {
     return OrderModel(
       shippingAddress: ShippingAddressModel.fromJson(json['shippingAddress']),
-      taxPrice: json['taxPrice'],
-      shippingPrice: json['shippingPrice'],
-      totalOrderPrice: json['totalOrderPrice'],
+      taxPrice: (json['taxPrice'] as num?)?.toDouble() ?? 0.0,
+      shippingPrice: (json['shippingPrice'] as num?)?.toDouble() ?? 0.0,
+      totalOrderPrice: (json['totalOrderPrice'] as num?)?.toDouble() ?? 0.0,
       paymentMethodType: json['paymentMethodType'],
       isPaid: json['isPaid'],
       isDelivered: json['isDelivered'],
       sId: json['_id'],
-      user: OrderUserModel.fromJson(json['user']),
+      user: (json['user'] is Map)
+          ? OrderUserModel.fromJson(json['user'])
+          : OrderUserModel(
+              sId: json['user'] ?? '',
+              name: '',
+              email: '',
+              phone: '',
+            ),
       cartItems: List<CartItemsModel>.from(
         json['cartItems'].map((x) => CartItemsModel.fromJson(x)),
       ),
