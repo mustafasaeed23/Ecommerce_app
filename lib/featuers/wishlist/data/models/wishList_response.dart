@@ -11,8 +11,10 @@ class WishListResponse {
     return WishListResponse(
       status: json['status'],
       count: json['count'],
-      data: json['data']
-          .map<WishListProductModel>((e) => WishListProductModel.fromJson(e))
+      data: (json['data'] as List)
+          .map<WishListProductModel>(
+            (e) => WishListProductModel.fromJson(e as Map<String, dynamic>),
+          )
           .toList(),
     );
   }
@@ -25,7 +27,6 @@ class WishListProductModel extends WishlistProductEntity {
   final String? slug;
   final String? description;
   final int? quantity;
-
   final double? ratingsAverage;
   final String? createdAt;
   final String? updatedAt;
@@ -51,15 +52,15 @@ class WishListProductModel extends WishlistProductEntity {
   factory WishListProductModel.fromJson(Map<String, dynamic> json) {
     return WishListProductModel(
       sold: json['sold'],
-      images: json['images'].cast<String>(),
+      images: (json['images'] as List<dynamic>?)?.cast<String>(),
       ratingsQuantity: json['ratingsQuantity'],
-      title: json['title'],
+      title: json['title'] ?? '',
       slug: json['slug'],
       description: json['description'],
       quantity: json['quantity'],
-      price: json['price'],
-      imageCover: json['imageCover'],
-      ratingsAverage: json['ratingsAverage'],
+      price: (json['price'] as num?)?.toDouble() ?? 0.0,
+      imageCover: json['imageCover'] ?? '',
+      ratingsAverage: (json['ratingsAverage'] as num?)?.toDouble(),
       createdAt: json['createdAt'],
       updatedAt: json['updatedAt'],
       iV: json['__v'],

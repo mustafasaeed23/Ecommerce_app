@@ -8,6 +8,7 @@ import 'package:ecommerce/featuers/layout/cubit/nav_bar_cubit.dart';
 import 'package:ecommerce/featuers/layout/cubit/nav_bar_state.dart';
 import 'package:ecommerce/featuers/products/presentation/screens/products_screen.dart';
 import 'package:ecommerce/featuers/profile/presentation/screens/account_screen.dart';
+import 'package:ecommerce/featuers/wishlist/presentation/cubit/wishlist_cubit.dart';
 import 'package:ecommerce/featuers/wishlist/presentation/screens/wishList_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,8 +19,14 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => NavBarCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => NavBarCubit()),
+        BlocProvider(
+          create: (context) =>
+              serviceLocator.get<WishlistCubit>()..getUserWishlist(),
+        ),
+      ],
       child: BlocBuilder<NavBarCubit, NavBarState>(
         builder: (context, state) {
           return Scaffold(

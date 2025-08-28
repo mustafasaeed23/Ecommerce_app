@@ -21,7 +21,6 @@ class ProductsListWidget extends StatelessWidget {
               serviceLocator.get<ProductsCubit>()..getProducts(),
         ),
         BlocProvider(create: (context) => serviceLocator.get<CartCubit>()),
-        BlocProvider(create: (context) => serviceLocator.get<WishlistCubit>()),
       ],
       child: BlocBuilder<ProductsCubit, ProductsState>(
         builder: (context, state) {

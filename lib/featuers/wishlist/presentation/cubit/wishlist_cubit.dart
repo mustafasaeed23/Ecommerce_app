@@ -7,32 +7,32 @@ import 'package:injectable/injectable.dart';
 
 @injectable
 class WishlistCubit extends Cubit<WishlistState> {
-  WishlistCubit(this.getUserWishlistUseCase, this.addToWishListUseCase)
+  WishlistCubit(this._getUserWishlistUseCase, this._addToWishlistUseCase)
     : super(WishlistInitial());
 
-  final GetUserWishlistUseCase getUserWishlistUseCase;
-  final AddToWishlistUseCase addToWishListUseCase;
-  List<WishlistProductEntity> wishlistProductEntity = [];
+  final GetUserWishlistUseCase _getUserWishlistUseCase;
+  final AddToWishlistUseCase _addToWishlistUseCase;
+
+  List<WishlistProductEntity> wishlistProducts = [];
 
   Future<void> getUserWishlist() async {
     emit(WishlistLoading());
-    final result = await getUserWishlistUseCase.getUserWishlist();
-    result.fold((l) => emit(WishlistError(l.message)), (wishlist) {
-      wishlistProductEntity = wishlist;
-      emit(WishlistLoaded()); // UI reads cubit.wishlistProductEntity
+    final result = await _getUserWishlistUseCase.getUserWishlist();
+    result.fold((failure) => emit(WishlistError(failure.message)), (wishlist) {
+      wishlistProducts = wishlist;
+      emit(WishlistLoaded(List.from(wishlistProducts)));
     });
   }
 
   Future<void> addToWishlist(String productId) async {
     emit(AddToWishListLoading());
-    final result = await addToWishListUseCase(productId);
-    result.fold((l) => emit(AddToWishListError(l.message)), (_) async {
-      final refreshed = await getUserWishlistUseCase.getUserWishlist();
-      refreshed.fold((l) => emit(AddToWishListError(l.message)), (wishlist) {
-        wishlistProductEntity = wishlist;
-        emit(WishlistLoaded());
-        emit(AddToWishListSuccess());
-      });
+    final result = await _addToWishlistUseCase(productId);
+
+    result.fold((failure) => emit(AddToWishListError(failure.message)), (
+      _,
+    ) async {
+      // refresh wishlist
+      await getUserWishlist();
     });
   }
 }

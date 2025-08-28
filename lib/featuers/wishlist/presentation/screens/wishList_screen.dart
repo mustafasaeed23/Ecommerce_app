@@ -1,4 +1,3 @@
-import 'package:ecommerce/core/di/service_locator.dart';
 import 'package:ecommerce/core/widgets/loading_widget.dart';
 import 'package:ecommerce/core/widgets/search_widget.dart';
 import 'package:ecommerce/featuers/wishlist/presentation/cubit/wishlist_cubit.dart';
@@ -13,43 +12,58 @@ class WishlistScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var wishlistCubit = serviceLocator.get<WishlistCubit>();
-    return BlocProvider(
-      create: (context) => wishlistCubit..getUserWishlist(),
-      child: SafeArea(
-        top: true,
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 15.0.w, vertical: 10.h),
-          child: Column(
-            children: [
-              SearchWidget(),
-              SizedBox(height: 15.h),
-              BlocBuilder<WishlistCubit, WishlistState>(
-                builder: (context, state) {
-                  if (state is WishlistLoading) {
-                    return LoadingWidget();
-                  } else if (state is WishlistLoaded) {
-                    return Expanded(
-                      child: ListView.separated(
-                        itemBuilder: (context, index) {
-                          return WishlistItemWidget(
-                            entity: wishlistCubit.wishlistProductEntity[index],
-                            wishlistCubit: wishlistCubit,
-                          );
-                        },
-                        separatorBuilder: (context, index) =>
-                            SizedBox(height: 15.h),
-                        itemCount: wishlistCubit.wishlistProductEntity.length,
-                      ),
+    // fetch wishlist on open
+    context.read<WishlistCubit>().getUserWishlist();
+
+    return SafeArea(
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 15.0.w, vertical: 10.h),
+        child: Column(
+          children: [
+            const SearchWidget(),
+            SizedBox(height: 15.h),
+            Expanded(
+              child: BlocConsumer<WishlistCubit, WishlistState>(
+                listener: (context, state) {
+                  if (state is AddToWishListSuccess) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Added to wishlist ✅")),
                     );
-                  } else if (state is WishlistError) {
-                    return Center(child: Text(state.message));
+                  } else if (state is WishlistError ||
+                      state is AddToWishListError) {
+                    final message = state is WishlistError
+                        ? state.message
+                        : (state as AddToWishListError).message;
+                    ScaffoldMessenger.of(
+                      context,
+                    ).showSnackBar(SnackBar(content: Text("Error: $message")));
                   }
-                  return Text("error");
+                },
+                builder: (context, state) {
+                  if (state is WishlistLoading ||
+                      state is AddToWishListLoading) {
+                    return const LoadingWidget();
+                  } else if (state is WishlistLoaded) {
+                    if (state.wishlistProducts.isEmpty) {
+                      return const Center(
+                        child: Text("Your wishlist is empty"),
+                      );
+                    }
+                    return ListView.separated(
+                      itemCount: state.wishlistProducts.length,
+                      separatorBuilder: (_, __) => SizedBox(height: 15.h),
+                      itemBuilder: (context, index) {
+                        return WishlistItemWidget(
+                          entity: state.wishlistProducts[index],
+                        );
+                      },
+                    );
+                  }
+                  return const Center(child: Text("Your wishlist is empty"));
                 },
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

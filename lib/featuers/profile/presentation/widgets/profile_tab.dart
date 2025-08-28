@@ -118,7 +118,7 @@ class ProfileTab extends StatelessWidget {
                         String? addressText;
                         if (state is AddressSuccess &&
                             state.address.isNotEmpty) {
-                          addressText = state.address.first.city;
+                          addressText = state.address.last.city;
                         }
                         return CustomTextFormField(
                           headerText: "Your Address",

@@ -2,7 +2,7 @@ class WishlistProductEntity {
   final String imageCover;
   final String id;
   final String title;
-  final  int price;
+  final double price;
 
   WishlistProductEntity({
     required this.imageCover,

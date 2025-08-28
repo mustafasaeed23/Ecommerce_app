@@ -12,8 +12,8 @@ class WishlistError extends WishlistState {
 }
 
 class WishlistLoaded extends WishlistState {
-  // final List<WishlistProductEntity> wishlistProducts;
-  // WishlistLoaded(this.wishlistProducts);
+  final List<WishlistProductEntity> wishlistProducts;
+  WishlistLoaded(this.wishlistProducts);
 }
 
 class AddToWishListLoading extends WishlistState {}

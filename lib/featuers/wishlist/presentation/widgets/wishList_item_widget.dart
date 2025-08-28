@@ -9,9 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class WishlistItemWidget extends StatelessWidget {
-  const WishlistItemWidget({super.key, required this.entity, required this.wishlistCubit});
+  const WishlistItemWidget({super.key, required this.entity});
   final WishlistProductEntity entity;
-  final WishlistCubit wishlistCubit;
+  // final WishlistCubit wishlistCubit;
 
   @override
   Widget build(BuildContext context) {
