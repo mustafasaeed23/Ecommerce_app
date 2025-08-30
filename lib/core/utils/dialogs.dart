@@ -55,7 +55,6 @@ class Dialogs {
             decoration: BoxDecoration(
               color: bg,
               borderRadius: BorderRadius.circular(12),
-              boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 8)],
             ),
             child: Row(
               children: [

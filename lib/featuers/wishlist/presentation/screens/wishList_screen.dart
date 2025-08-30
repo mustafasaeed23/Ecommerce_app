@@ -29,45 +29,40 @@ class WishlistScreen extends StatelessWidget {
             Expanded(
               child: BlocConsumer<WishlistCubit, WishlistState>(
                 listener: (context, state) {
-                  if (state is WishlistLoading ||
-                      state is AddToWishListLoading ||
-                      state is RemoveFromWishListLoading) {
-                    Center(child: LoadingWidget());
-                  }
                   if (state is AddToWishListSuccess) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text("Added to wishlist ✅")),
                     );
-                  } else if (state is WishlistError ||
-                      state is AddToWishListError) {
-                    final message = state is WishlistError
-                        ? state.message
-                        : (state as AddToWishListError).message;
-                    ScaffoldMessenger.of(
-                      context,
-                    ).showSnackBar(SnackBar(content: Text("Error: $message")));
+                  }
+                  if (state is RemoveFromWishListSuccess) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Removed from wishlist ❌")),
+                    );
                   }
                 },
                 builder: (context, state) {
                   if (state is WishlistLoading ||
-                      state is AddToWishListLoading) {
+                      state is AddToWishListLoading ||
+                      state is RemoveFromWishListLoading) {
                     return const LoadingWidget();
-                  } else if (state is WishlistLoaded &&
-                      state.wishlistProducts.isNotEmpty) {
-                    return ListView.separated(
-                      itemCount: state.wishlistProducts.length,
-                      separatorBuilder: (_, __) => SizedBox(height: 15.h),
-                      itemBuilder: (context, index) {
-                        return WishlistItemWidget(
-                          entity: state.wishlistProducts[index],
-                        );
-                      },
-                    );
                   }
-                  return state is WishlistLoaded &&
-                          state.wishlistProducts.isEmpty
-                      ? Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
+
+                  if (state is WishlistLoaded) {
+                    if (state.wishlistProducts.isNotEmpty) {
+                      return ListView.separated(
+                        itemCount: state.wishlistProducts.length,
+                        separatorBuilder: (_, __) => SizedBox(height: 15.h),
+                        itemBuilder: (context, index) {
+                          return WishlistItemWidget(
+                            entity: state.wishlistProducts[index],
+                          );
+                        },
+                      );
+                    } else {
+                      // Empty state
+                      return Center(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
                           children: [
                             SizedBox(
                               height: 200.h,
@@ -77,26 +72,20 @@ class WishlistScreen extends StatelessWidget {
                               ),
                             ),
                             SizedBox(height: 20.h),
-                            Center(
-                              child: Text(
-                                "Your wishlist is empty",
-                                style: FontsStyle.semiBold.copyWith(
-                                  fontSize: 13.r,
-                                  color: AppColors.mainColor,
-                                ),
+                            Text(
+                              "Your wishlist is empty",
+                              style: FontsStyle.semiBold.copyWith(
+                                fontSize: 13.r,
+                                color: AppColors.mainColor,
                               ),
                             ),
                           ],
-                        )
-                      : Center(
-                          child: Text(
-                            "Something went wrong, please try again later.",
-                            style: TextStyle(
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        );
+                        ),
+                      );
+                    }
+                  }
+
+                  return const LoadingWidget();
                 },
               ),
             ),

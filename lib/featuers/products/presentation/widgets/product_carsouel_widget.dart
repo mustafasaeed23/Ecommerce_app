@@ -8,8 +8,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class ProductImageCarousel extends StatefulWidget {
   final List<String> imageUrls;
+  final String productId;
 
-  const ProductImageCarousel({super.key, required this.imageUrls});
+  const ProductImageCarousel({super.key, required this.imageUrls, required this.productId});
 
   @override
   _ProductImageCarouselState createState() => _ProductImageCarouselState();
@@ -50,7 +51,7 @@ class _ProductImageCarouselState extends State<ProductImageCarousel> {
                   ),
                   child: Align(
                     alignment: Alignment.topRight,
-                    child: FavouriteIconWidget(),
+                    child: FavouriteIconWidget(productId: widget.productId),
                   ),
                 ),
               ],

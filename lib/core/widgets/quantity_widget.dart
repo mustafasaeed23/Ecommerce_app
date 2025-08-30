@@ -82,7 +82,7 @@ class _QuantityWidgetState extends State<QuantityWidget> {
                 ),
               ),
               Text(
-                widget.cartItemCount ?? '',
+                widget.cartItemCount ?? '1',
                 style: FontsStyle.bold.copyWith(
                   fontSize: 16.r,
                   color: AppColors.whiteColor,

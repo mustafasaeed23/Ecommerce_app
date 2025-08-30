@@ -50,11 +50,13 @@ class ProfileTab extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 5.h),
-                    Text(
-                      user.email,
-                      style: FontsStyle.medium.copyWith(
-                        fontSize: 18,
-                        color: AppColors.mainColor,
+                    FittedBox(
+                      child: Text(
+                        user.email,
+                        style: FontsStyle.medium.copyWith(
+                          fontSize: 18,
+                          color: AppColors.mainColor,
+                        ),
                       ),
                     ),
                     SizedBox(height: 20.h),

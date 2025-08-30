@@ -18,7 +18,7 @@ class WishlistItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 115.h,
+      height: 118.h,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15.r),
         border: Border.all(
