@@ -71,7 +71,7 @@ class ProductModel extends ProductEntity {
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
     return ProductModel(
-      id: json['id']?.toString() ?? '',
+      id: json['_id']?.toString() ?? '', // use _id consistently
       sId: json['_id']?.toString() ?? '',
       title: json['title'] ?? '',
       description: json['description'] ?? '',
@@ -81,9 +81,11 @@ class ProductModel extends ProductEntity {
       price: json['price'] is int
           ? json['price']
           : int.tryParse(json['price'].toString()) ?? 0,
-      priceAfterDiscount: json['priceAfterDiscount'] is int
-          ? json['priceAfterDiscount']
-          : int.tryParse(json['priceAfterDiscount'].toString()) ?? 0,
+      priceAfterDiscount: json['priceAfterDiscount'] != null
+          ? (json['priceAfterDiscount'] is int
+                ? json['priceAfterDiscount']
+                : int.tryParse(json['priceAfterDiscount'].toString()) ?? 0)
+          : 0, // default to 0 if missing
       ratingsAverage: (json['ratingsAverage'] is num)
           ? (json['ratingsAverage'] as num).toDouble()
           : double.tryParse(json['ratingsAverage']?.toString() ?? '') ?? 0.0,
@@ -93,10 +95,9 @@ class ProductModel extends ProductEntity {
       imageCover: json['imageCover']?.toString() ?? '',
       images:
           (json['images'] as List?)?.map((e) => e.toString()).toList() ?? [],
-      // extra fields
       sold: json['sold'] is int
           ? json['sold']
-          : int.tryParse(json['sold']?.toString() ?? ''),
+          : int.tryParse(json['sold']?.toString() ?? '') ?? 0, // safe fallback
       slug: json['slug']?.toString(),
       createdAt:
           json['created_at']?.toString() ?? json['createdAt']?.toString(),

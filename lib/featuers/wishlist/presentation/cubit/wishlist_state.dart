@@ -24,3 +24,15 @@ class AddToWishListError extends WishlistState {
 }
 
 class AddToWishListSuccess extends WishlistState {}
+
+class RemoveFromWishListLoading extends WishlistState {}
+
+class RemoveFromWishListError extends WishlistState {
+  final String message;
+  RemoveFromWishListError(this.message);
+}
+
+class RemoveFromWishListSuccess extends WishlistState {
+  final String message;
+  RemoveFromWishListSuccess(this.message);
+}

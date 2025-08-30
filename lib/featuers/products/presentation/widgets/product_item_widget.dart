@@ -49,11 +49,7 @@ class ProductItemWidget extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 8.0.w, vertical: 4.h),
                 child: Align(
                   alignment: Alignment.topRight,
-                  child: FavouriteIconWidget(
-                    onTap: () =>
-                        context.read<WishlistCubit>()
-                          ..addToWishlist(productEntity.id),
-                  ),
+                  child: FavouriteIconWidget(productId: productEntity.id),
                 ),
               ),
             ],

@@ -110,6 +110,8 @@ import 'package:ecommerce/featuers/wishlist/domain/usecases/add_to_wishlist_use_
     as _i354;
 import 'package:ecommerce/featuers/wishlist/domain/usecases/get_user_wishlist_use_case.dart'
     as _i250;
+import 'package:ecommerce/featuers/wishlist/domain/usecases/remove_from_wishlist_use_case.dart'
+    as _i1000;
 import 'package:ecommerce/featuers/wishlist/presentation/cubit/wishlist_cubit.dart'
     as _i741;
 import 'package:get_it/get_it.dart' as _i174;
@@ -191,11 +193,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i406.HomeContractRepo>(
       () => _i308.HomeImplyRepo(gh<_i986.HomeRemoteDataSource>()),
     );
+    gh.lazySingleton<_i787.CreateOrderUseCase>(
+      () => _i787.CreateOrderUseCase(gh<_i379.OrdersContractRepo>()),
+    );
     gh.lazySingleton<_i976.GetAllOrdersUseCase>(
       () => _i976.GetAllOrdersUseCase(gh<_i379.OrdersContractRepo>()),
     );
-    gh.lazySingleton<_i787.CreateOrderUseCase>(
-      () => _i787.CreateOrderUseCase(gh<_i379.OrdersContractRepo>()),
+    gh.lazySingleton<_i1000.RemoveFromWishlistUseCase>(
+      () => _i1000.RemoveFromWishlistUseCase(gh<_i365.WishlistContractRepo>()),
     );
     gh.lazySingleton<_i767.BrandsUseCase>(
       () => _i767.BrandsUseCase(gh<_i406.HomeContractRepo>()),
@@ -209,17 +214,17 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i316.ProductsCubit>(
       () => _i316.ProductsCubit(gh<_i456.ProductsUseCase>()),
     );
-    gh.lazySingleton<_i848.GetCartUseCase>(
-      () => _i848.GetCartUseCase(gh<_i957.CartContractRepo>()),
-    );
     gh.lazySingleton<_i854.AddToCartUseCase>(
       () => _i854.AddToCartUseCase(gh<_i957.CartContractRepo>()),
     );
-    gh.lazySingleton<_i714.UpdateCartUseCase>(
-      () => _i714.UpdateCartUseCase(gh<_i957.CartContractRepo>()),
-    );
     gh.lazySingleton<_i731.DeleteItemUseCase>(
       () => _i731.DeleteItemUseCase(gh<_i957.CartContractRepo>()),
+    );
+    gh.lazySingleton<_i848.GetCartUseCase>(
+      () => _i848.GetCartUseCase(gh<_i957.CartContractRepo>()),
+    );
+    gh.lazySingleton<_i714.UpdateCartUseCase>(
+      () => _i714.UpdateCartUseCase(gh<_i957.CartContractRepo>()),
     );
     gh.factory<_i420.AddressCubit>(
       () => _i420.AddressCubit(gh<_i891.GetUserAddressUseCase>()),
@@ -238,11 +243,11 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i731.DeleteItemUseCase>(),
       ),
     );
-    gh.lazySingleton<_i250.GetUserWishlistUseCase>(
-      () => _i250.GetUserWishlistUseCase(gh<_i365.WishlistContractRepo>()),
-    );
     gh.lazySingleton<_i354.AddToWishlistUseCase>(
       () => _i354.AddToWishlistUseCase(gh<_i365.WishlistContractRepo>()),
+    );
+    gh.lazySingleton<_i250.GetUserWishlistUseCase>(
+      () => _i250.GetUserWishlistUseCase(gh<_i365.WishlistContractRepo>()),
     );
     gh.factory<_i196.OrdersCubit>(
       () => _i196.OrdersCubit(
@@ -260,6 +265,7 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i741.WishlistCubit(
         gh<_i250.GetUserWishlistUseCase>(),
         gh<_i354.AddToWishlistUseCase>(),
+        gh<_i1000.RemoveFromWishlistUseCase>(),
       ),
     );
     return this;

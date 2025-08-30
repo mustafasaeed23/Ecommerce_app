@@ -6,6 +6,7 @@ import 'package:ecommerce/core/widgets/favourite_icon_widget.dart';
 import 'package:ecommerce/featuers/wishlist/domain/entities/wishlist_product_entity.dart';
 import 'package:ecommerce/featuers/wishlist/presentation/cubit/wishlist_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class WishlistItemWidget extends StatelessWidget {
@@ -73,7 +74,7 @@ class WishlistItemWidget extends StatelessWidget {
                         ),
                       ),
                       SizedBox(width: 8.w),
-                      const FavouriteIconWidget(isFavourite: true),
+                      FavouriteIconWidget(productId: entity.id),
                     ],
                   ),
                   SizedBox(height: 8.h),

@@ -31,4 +31,6 @@ class Assets {
   // animations
   static const String emptyCartAnimation =
       "assets/animations/Cart Empty State.json";
+
+  static const String emptyBox = "assets/animations/Empty box.json";
 }

@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:ecommerce/core/api/api_constants.dart';
 import 'package:ecommerce/core/errors/expections.dart';
 import 'package:ecommerce/featuers/wishlist/data/datasources/wishlist_remote_data_source.dart';
+import 'package:ecommerce/featuers/wishlist/data/models/remove_from_wishList_response.dart';
 import 'package:ecommerce/featuers/wishlist/data/models/wishList_response.dart';
 import 'package:injectable/injectable.dart';
 
@@ -29,6 +30,20 @@ class WishlistRemoteApiDataSource implements WishlistRemoteDataSource {
       );
     } catch (_) {
       throw RemoteException("Failed To Add To WishList");
+    }
+  }
+
+  @override
+  Future<RemoveFromWishListResponse> removeFromWishList(
+    String productId,
+  ) async {
+    try {
+      final response = await dio.delete(
+        "${ApiConstants.wishlistEndPoint}/$productId",
+      );
+      return RemoveFromWishListResponse.fromJson(response.data);
+    } catch (_) {
+      throw RemoteException("Failed To delete from WishList");
     }
   }
 }
