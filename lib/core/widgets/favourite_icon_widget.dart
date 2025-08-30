@@ -8,9 +8,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class FavouriteIconWidget extends StatelessWidget {
-  const FavouriteIconWidget({super.key, this.productId});
+  const FavouriteIconWidget({super.key, required this.productId});
 
-  final String? productId;
+  final String productId;
 
   @override
   Widget build(BuildContext context) {
@@ -24,14 +24,14 @@ class FavouriteIconWidget extends StatelessWidget {
       },
       builder: (context, state) {
         final wishlistCubit = context.read<WishlistCubit>();
-        final isFavourite = wishlistCubit.isProductInWishlist(productId!);
+        final isFavourite = wishlistCubit.isProductInWishlist(productId);
 
         return InkWell(
           onTap: () {
             if (isFavourite) {
-              context.read<WishlistCubit>().removeFromWishList(productId!);
+              context.read<WishlistCubit>().removeFromWishList(productId);
             } else {
-              context.read<WishlistCubit>().addToWishlist(productId!);
+              context.read<WishlistCubit>().addToWishlist(productId);
             }
           },
           child: Container(

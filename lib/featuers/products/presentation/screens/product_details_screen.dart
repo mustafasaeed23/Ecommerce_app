@@ -70,7 +70,10 @@ class ProductDetailsScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ProductImageCarousel(imageUrls: product.images),
+              ProductImageCarousel(
+                imageUrls: product.images,
+                productId: product.id,
+              ),
               SizedBox(height: 15.h),
               Row(
                 children: [
@@ -193,9 +196,7 @@ class ProductDetailsScreen extends StatelessWidget {
                     child: BlocListener<CartCubit, CartState>(
                       listener: (context, state) {
                         if (state is AddToCartSuccess) {
-                          Dialogs.successDialog(
-                            "Product Added to cart successfully",
-                          );
+                          Dialogs.customToast(context, "Product Added to cart");
                         } else if (state is AddToCartError) {
                           Dialogs.showMessageDialog(state.message);
                         }

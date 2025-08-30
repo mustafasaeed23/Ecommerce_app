@@ -111,8 +111,9 @@ class ProductItemWidget extends StatelessWidget {
                       child: BlocListener<CartCubit, CartState>(
                         listener: (context, state) {
                           if (state is AddToCartSuccess) {
-                            Dialogs.successDialog(
-                              "Product Added to cart successfully",
+                            Dialogs.customToast(
+                              context,
+                              "Product Added to cart",
                             );
                           } else if (state is AddToCartError) {
                             Dialogs.showMessageDialog(state.message);
